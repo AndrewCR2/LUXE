@@ -1,7 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:luxe/screens/login/login.dart';
+import 'package:luxe/screens/screens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,9 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Luxe',
-        initialRoute: 'login',
+        initialRoute: 'almacen',
         routes: {
           '/': (_) => Login_Page(),
+          'almacen':(_) => AlmacenScreen() 
         });
   }
 }
