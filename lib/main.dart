@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/screens/screens.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,10 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Luxe',
-        initialRoute: 'almacen',
+        initialRoute: 'login',
         routes: {
-          '/': (_) => Login_Page(),
-          'almacen':(_) => AlmacenScreen() 
+          'login': (_) => Login_Page(),
+          'registrese': (_) => Registro(),
+          'olvide_contraseña': (_) => Olvide_Contra(),
+          'verificacion': (_) => Verificacion(),
+          'almacen':(_) => const AlmacenScreen() ,
         });
   }
 }
