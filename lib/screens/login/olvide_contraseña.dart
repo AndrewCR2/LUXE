@@ -115,7 +115,14 @@ class _Olvide_ContraState extends State<Olvide_Contra> {
                                   RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7),
                               ))),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Validando...')));
+                              Navigator.pushNamed(context, 'verificacion');
+                            }
+                          },
                         ),
                       ),
                     ],

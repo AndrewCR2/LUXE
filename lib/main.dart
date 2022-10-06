@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/screens/login/login.dart';
 import 'package:luxe/screens/login/olvide_contrase%C3%B1a.dart';
-import 'package:luxe/screens/login/registrse.dart';
+import 'package:luxe/screens/login/registrese.dart';
+import 'package:luxe/screens/login/verificacion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
           'login': (_) => Login_Page(),
           'registrese': (_) => Registro(),
           'olvide_contraseña': (_) => Olvide_Contra(),
+          'verificacion': (_) => Verificacion(),
         });
   }
 }

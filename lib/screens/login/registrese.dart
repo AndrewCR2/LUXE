@@ -219,7 +219,12 @@ class _RegistroState extends State<Registro> {
                                   RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7),
                           ))),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Validando...')));
+                        }
+                      },
                     ),
                   ),
                 ],
