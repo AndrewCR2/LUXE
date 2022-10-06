@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:luxe/screens/login/login.dart';
+import 'package:luxe/screens/login/olvide_contrase%C3%B1a.dart';
+import 'package:luxe/screens/login/registrse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         title: 'Luxe',
         initialRoute: 'login',
         routes: {
-          '/': (_) => Login_Page(),
+          'login': (_) => Login_Page(),
+          'registrese': (_) => Registro(),
+          'olvide_contraseña': (_) => Olvide_Contra(),
         });
   }
 }
