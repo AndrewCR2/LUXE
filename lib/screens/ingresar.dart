@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert' as convert;
 
 class Ingresar extends StatefulWidget {
   const Ingresar({Key? key}) : super(key: key);
@@ -12,16 +15,47 @@ class _IngresarState extends State<Ingresar> {
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
-  final txtCorreo = TextEditingController();
+  final txtEmail = TextEditingController();
   final txtPass = TextEditingController();
-  final txtUser = TextEditingController();
 
   String email = '';
   String password = '';
-  String user = '';
 
   @override
   Widget build(BuildContext context) {
+
+    void ingresar(email, pass) async{
+
+      try {
+        
+        var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
+
+        final body =  {
+          'email': email,
+          'password': pass
+        };
+
+        var response = await http.post(url,
+        body: body
+        ).timeout(const Duration(seconds: 1));
+
+        print(body);
+
+        var jsonResponse =convert.jsonDecode(response.body) as Map<String, dynamic>;
+        
+        print(jsonResponse);
+
+        if (jsonResponse['msg'] == 'Bienvenido') {
+          Navigator.pushReplacementNamed(context, 'verificacion');
+        }else{
+          print('Usuario incorrecto');
+        }
+      } catch (Error) {
+        print(Error);
+        print('http error');
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -77,7 +111,7 @@ class _IngresarState extends State<Ingresar> {
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(9))),
-                      controller: txtCorreo,
+                      controller: txtEmail,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Porfavor ingrese su correo';
@@ -103,7 +137,7 @@ class _IngresarState extends State<Ingresar> {
                             hintText: '*******',
                             labelText: 'Contraseña',
                             labelStyle: GoogleFonts.urbanist(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                 color: Color.fromRGBO(131, 145, 161, 1),
                               ),
                             ),
@@ -146,11 +180,10 @@ class _IngresarState extends State<Ingresar> {
                 Center(
                 child: GestureDetector(
                     onTap: (){
-                      if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Validando...')));
-                          Navigator.pushNamed(context, 'registrese');
-                      }
+                      email = txtEmail.text;
+                      password = txtPass.text;
+
+                      ingresar(email, password);
                     },
                     child: Container(
                     child: const Center(child: Text('Acceder',style: TextStyle(color: Colors.white),)),
@@ -190,7 +223,7 @@ class _IngresarState extends State<Ingresar> {
                   Text(
                     '¿No tienes una cuenta? ',
                     style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
+                      textStyle:const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(106, 112, 124, 1)),
                     ),
@@ -199,17 +232,18 @@ class _IngresarState extends State<Ingresar> {
                     child: Text(
                       'Registrate ahora',
                       style: GoogleFonts.urbanist(
-                        textStyle: TextStyle(
+                        textStyle:const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color.fromRGBO(0, 41, 107, 1),
                         ),
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, 'registrese');
+                    },
                   )
                 ],
               )
-
               ],
             )),
           ),
