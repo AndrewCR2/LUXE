@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:luxe/models/user_profile_response.dart';
+import 'package:luxe/shared_preferences/preferences.dart';
 
 class UserProfileProvider extends ChangeNotifier {
-  final String _baseUrl = "localhost:8080";
-  
+  final String _baseUrl = "luxe-api-rest-production.up.railway.app";
+
   UserProfileResponse? user;
 
-  UserProfileProvider() {
-    getUserProfile();
+  UserProfileProvider(BuildContext context) {
+    getUserProfile(context);
   }
 
-  getUserProfile() async {
-    var url = Uri.http(_baseUrl, '/api/userprofile');
+  getUserProfile(BuildContext context) async {
+    try {
+      var url = Uri.https(_baseUrl, '/api/userprofile');
 
-    final headers = {
-      'x-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzNjMTA5ZThkNTlhYzgyYzEyOWViZCIsImlhdCI6MTY2NTE3MDE2NywiZXhwIjoxNjY1MTg0NTY3fQ.CQBPKoDzLVw5kKNA-P4I90gBbEmRkNyQgUOLqEVB8CY'
-    };
-    final response = await http.get(url, headers: headers);
+      final token = Preferences.token;
 
-    if (response.body == 'Token no valido') {
-      print('================');
-      print('Vamoos');
-      print('================');
-      return;
+      final response = await http.get(url, headers: {'x-token': token});
+
+      if (response.body == 'Token no valido') {
+        Preferences.token = ''; // reseteamos el token
+        Navigator.pushReplacementNamed(context, 'ingresar');
+        return;
+      }
+
+      user = UserProfileResponse.fromJson(response.body);
+
+      notifyListeners();
+    } catch (error) {
+
+      print(error);
     }
-
-    user = UserProfileResponse.fromJson(response.body);
-
-    notifyListeners();
   }
 }

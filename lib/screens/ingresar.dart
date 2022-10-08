@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 import 'dart:convert' as convert;
+
+import 'package:luxe/shared_preferences/preferences.dart';
 
 class Ingresar extends StatefulWidget {
   const Ingresar({Key? key}) : super(key: key);
@@ -23,38 +25,6 @@ class _IngresarState extends State<Ingresar> {
 
   @override
   Widget build(BuildContext context) {
-
-    void ingresar(email, pass) async{
-
-      try {
-        
-        var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
-
-        final body =  {
-          'email': email,
-          'password': pass
-        };
-
-        var response = await http.post(url,
-        body: body
-        ).timeout(const Duration(seconds: 1));
-
-        print(body);
-
-        var jsonResponse =convert.jsonDecode(response.body) as Map<String, dynamic>;
-        
-        print(jsonResponse);
-
-        if (jsonResponse['msg'] == 'Bienvenido') {
-          Navigator.pushReplacementNamed(context, 'verificacion');
-        }else{
-          print('Usuario incorrecto');
-        }
-      } catch (Error) {
-        print(Error);
-        print('http error');
-      }
-    }
 
     return Scaffold(
         appBar: AppBar(
@@ -183,7 +153,7 @@ class _IngresarState extends State<Ingresar> {
                       email = txtEmail.text;
                       password = txtPass.text;
 
-                      ingresar(email, password);
+                      ingresar(email, password, context);
                     },
                     child: Container(
                     child: const Center(child: Text('Acceder',style: TextStyle(color: Colors.white),)),
@@ -248,9 +218,38 @@ class _IngresarState extends State<Ingresar> {
             )),
           ),
         ),
-
-        
-
-        );
+    );
   }
 }
+
+void ingresar(email, pass, BuildContext context) async{
+
+      try {
+        
+        var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
+
+        var response = await http.post(url,
+        headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body:convert.jsonEncode(<String, String>{
+            'email': email,
+            'password': pass
+        })
+        ).timeout(const Duration(seconds: 90));
+
+        var jsonResponse =convert.jsonDecode(response.body) as Map<String, dynamic>;
+        
+        if (jsonResponse['msg'] == 'Bienvenido') {
+          Preferences.token = jsonResponse['token']; // Guardamos el token
+        
+          Navigator.pushReplacementNamed(context, 'almacen');
+
+        }else{
+          print('Usuario incorrecto');
+        }
+      } catch (Error) {
+        print(Error);
+        print('http error');
+      }
+    }

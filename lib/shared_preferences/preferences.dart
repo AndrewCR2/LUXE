@@ -13,7 +13,7 @@ class Preferences{
   static String get token {
     return _prefs.getString('token') ?? _token;
   }
-  static set name(String value){
+  static set token(String value){
     _prefs.setString('token', value);
   }
 
