@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Luxe',
-        initialRoute: 'almacen',
+        initialRoute: 'splash', 
         routes: {
           'splash': (_) => const SplasScreen(),
           'inicio':(_)=>  const AccReg(),
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           'registrese': (_) => Registro(),
           'olvide_contraseña': (_) => Olvide_Contra(),
           'verificacion': (_) => Verificacion(),
-          'almacen':(_) => const AlmacenScreen() ,
+          'almacen':(_) =>  AlmacenScreen() ,
         });
   }
 }
