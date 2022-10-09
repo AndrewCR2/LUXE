@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/providers/user_profile_provider.dart';
 import 'dart:convert' as convert;
 
 import 'package:luxe/shared_preferences/preferences.dart';
+import 'package:provider/provider.dart';
 
 class Ingresar extends StatefulWidget {
   const Ingresar({Key? key}) : super(key: key);
@@ -241,8 +243,10 @@ void ingresar(email, pass, BuildContext context) async{
         var jsonResponse =convert.jsonDecode(response.body) as Map<String, dynamic>;
         
         if (jsonResponse['msg'] == 'Bienvenido') {
+          
           Preferences.token = jsonResponse['token']; // Guardamos el token
         
+          Provider.of<UserProfileProvider>(context, listen: false).getUserProfile(context);
           Navigator.pushReplacementNamed(context, 'almacen');
 
         }else{
