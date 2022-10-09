@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/search/objetos_search.dart';
 import 'package:luxe/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class AlmacenScreen extends StatefulWidget {
   const AlmacenScreen({Key? key}) : super(key: key);
@@ -46,6 +48,8 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
     final List<Widget> items = List.generate(
         objetos.length, (index) => CardItem(objeto: objetos[index]));
 
+    final userProfileProvider = Provider.of<UserProfileProvider>(context);
+
     return Scaffold(
       drawer: Drawer(),
       body: CustomScrollView(
@@ -53,7 +57,9 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
           const _CustomSliverAppBar(),
           SliverList(
               delegate: SliverChildListDelegate([
-            const HeaderAlmacen(),
+            if (userProfileProvider.user != null)
+              HeaderAlmacen(userProfile: userProfileProvider.user!),
+
             const Padding(
                 padding: EdgeInsets.only(left: 20, top: 20, bottom: 10),
                 child: Text('Almacen',
@@ -100,5 +106,3 @@ class _CustomSliverAppBar extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/models/user_profile_response.dart';
 
 class HeaderAlmacen extends StatelessWidget {
+  final UserProfileResponse userProfile;
   const HeaderAlmacen({
-    Key? key,
+    Key? key, required this.userProfile,
   }) : super(key: key);
 
   @override
@@ -22,14 +24,14 @@ class HeaderAlmacen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
-                  children: const [
-                    Text(
+                  children:[
+                    const Text(
                       'Hola ',
                       style: TextStyle(fontSize: 25),
                     ),
                     Text(
-                      'Jesus',
-                      style: TextStyle(fontSize: 25, color: Color(0xff00509d)),
+                      '${userProfile.user.name}',
+                      style: TextStyle(fontSize: 25, color: Color(0xff00509d), fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -48,15 +50,15 @@ class HeaderAlmacen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(
-                  children: const [
+                  children: [
                     Text('Objetos: '),
-                    Text('40', style: TextStyle(color: Color(0xff00509d))),
+                    Text('${userProfile.item.total}', style: TextStyle(color: Color(0xff00509d))),
                   ],
                 ),
                 Row(
-                  children: const [
+                  children:[
                     Text('Contenedores: '),
-                    Text('5', style: TextStyle(color: Color(0xff00509d))),
+                    Text('${userProfile.container.total}', style: TextStyle(color: Color(0xff00509d))),
                   ],
                 ),
               ],
