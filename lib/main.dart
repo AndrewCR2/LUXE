@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/screens/screens.dart';
-import 'package:luxe/shared_preferences/preferences.dart';
-import 'package:provider/provider.dart';
 
 void main() async{
 
@@ -18,7 +18,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> UserProfileProvider(context), lazy: false,)
+        ChangeNotifierProvider(create: (_)=> UserProfileProvider(), lazy: false,)
       ],
       child: const MyApp(),
     );
@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
           'registrese': (_) => Registro(),
           'olvide_contraseña': (_) => Olvide_Contra(),
           'verificacion': (_) => Verificacion(),
-          'almacen':(_) =>  AlmacenScreen() ,
+          'almacen':(_) =>  const AlmacenScreen() ,
+          'agregar_item':(_) =>  const AgregarItemScreen() ,
         });
   }
 }

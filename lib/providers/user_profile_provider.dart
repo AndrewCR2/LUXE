@@ -8,10 +8,6 @@ class UserProfileProvider extends ChangeNotifier {
 
   UserProfileResponse? user;
 
-  UserProfileProvider(BuildContext context) {
-    getUserProfile(context);
-  }
-
   getUserProfile(BuildContext context) async {
     try {
       var url = Uri.https(_baseUrl, '/api/userprofile');

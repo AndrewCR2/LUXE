@@ -25,13 +25,22 @@ class ObjetsSearch extends SearchDelegate{
   @override
   Widget buildResults(BuildContext context) {
 
-    return Text('Results');
+    return Text('hola');
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if(query.isEmpty){
+    return const Center(
+        child: Icon(
+          Icons.airplay_rounded,
+          size: 100,
+          color: Colors.grey,
+        ),
+      );
 
-    return Text('Results');
+    }
+    return    Text(query);
   }
 
 }

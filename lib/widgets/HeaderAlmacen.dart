@@ -30,7 +30,7 @@ class HeaderAlmacen extends StatelessWidget {
                       style: TextStyle(fontSize: 25),
                     ),
                     Text(
-                      '${userProfile.user.name}',
+                      userProfile.user.name,
                       style: TextStyle(fontSize: 25, color: Color(0xff00509d), fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -51,13 +51,13 @@ class HeaderAlmacen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('Objetos: '),
+                    const Text('Objetos: '),
                     Text('${userProfile.item.total}', style: TextStyle(color: Color(0xff00509d))),
                   ],
                 ),
                 Row(
                   children:[
-                    Text('Contenedores: '),
+                    const Text('Contenedores: '),
                     Text('${userProfile.container.total}', style: TextStyle(color: Color(0xff00509d))),
                   ],
                 ),
