@@ -4,8 +4,7 @@ import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/screens/screens.dart';
 
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
   runApp(const AppState());
@@ -18,7 +17,10 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> UserProfileProvider(), lazy: false,)
+        ChangeNotifierProvider(
+          create: (_) => UserProfileProvider(),
+          lazy: false,
+        )
       ],
       child: const MyApp(),
     );
@@ -34,17 +36,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Luxe',
-        initialRoute: 'splash', 
+        initialRoute: 'splash',
         routes: {
           'splash': (_) => const SplasScreen(),
-          'inicio':(_)=>  const AccReg(),
+          'inicio': (_) => const AccReg(),
           'ruta_ingresar': (_) => const Ingresar(),
-          'login': (_) => const Login_Page(),
           'registrese': (_) => Registro(),
           'olvide_contraseña': (_) => Olvide_Contra(),
           'verificacion': (_) => Verificacion(),
-          'almacen':(_) =>  const AlmacenScreen() ,
-          'agregar_item':(_) =>  const AgregarItemScreen() ,
+          'almacen': (_) => const AlmacenScreen(),
+          'agregar_item': (_) => const AgregarItemScreen(),
         });
   }
 }
