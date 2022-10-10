@@ -1,7 +1,10 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/screens/go_sign/google_sign.dart';
 import 'dart:convert' as convert;
 
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -25,7 +28,7 @@ class _IngresarState extends State<Ingresar> {
 
   @override
   Widget build(BuildContext context) {
-
+    Firebase.initializeApp();
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -174,15 +177,22 @@ class _IngresarState extends State<Ingresar> {
               const SizedBox(height: 15),
 
               Center(
-                child: Container(
-                  height: 45,
-                  width: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(9),
-                      image: const DecorationImage(image: AssetImage('assets/google.png'), fit: BoxFit.cover)
+                child: GestureDetector(
+                  onTap: ()async{
+                    User? user = await Authenticator.InitSign(
+                      context: context);
+                    print(user?.displayName);
+                  },
+                  child: Container(
+                    height: 45,
+                    width: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(9),
+                        image: const DecorationImage(image: AssetImage('assets/google.png'), fit: BoxFit.cover),
+                      ),
                     ),
-                  ),
+                ),
               ),
 
               const SizedBox(height: 40),
