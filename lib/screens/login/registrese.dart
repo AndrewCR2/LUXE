@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class Registro extends StatefulWidget {
   Registro({Key? key}) : super(key: key);
@@ -16,6 +20,9 @@ class _RegistroState extends State<Registro> {
   final txtContra = TextEditingController();
   final txtConfir_Contra = TextEditingController();
 
+  String name = '';
+  String email = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,8 +229,12 @@ class _RegistroState extends State<Registro> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Validando...')));
+                              const SnackBar(content: Text('Inicie Sesión')));
                         }
+                        name = txtNombre.text;
+                        email = txtCorreo.text;
+                        password = txtContra.text;
+                        registrar(name, email, password, context);
                       },
                     ),
                   ),
@@ -232,5 +243,31 @@ class _RegistroState extends State<Registro> {
         ),
       ),
     );
+  }
+}
+
+void registrar(name, email, pass, BuildContext context) async {
+  // print(name + email + pass);
+  try {
+    var url =
+        Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
+
+    var response = await http
+        .post(url,
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: convert.jsonEncode(<String, String>{
+              'name': name,
+              'email': email,
+              'password': pass
+            }))
+        .timeout(const Duration(seconds: 90));
+
+    print(response.body);
+    Navigator.pushNamed(context, 'ruta_ingresar');
+  } catch (Error) {
+    print(Error);
+    print('http error');
   }
 }
