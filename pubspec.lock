@@ -84,11 +84,7 @@ packages:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "1.3.1"
-=======
-    version: "1.2.0"
->>>>>>> e75982f2791452de63be77ad130996a8865e5d3c
   ffi:
     dependency: transitive
     description:
@@ -257,11 +253,7 @@ packages:
       name: material_color_utilities
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.1.5"
-=======
-    version: "0.1.3"
->>>>>>> e75982f2791452de63be77ad130996a8865e5d3c
   meta:
     dependency: transitive
     description:
@@ -289,11 +281,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "1.8.2"
-=======
-    version: "1.8.0"
->>>>>>> e75982f2791452de63be77ad130996a8865e5d3c
   path_provider:
     dependency: transitive
     description:
@@ -445,11 +433,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "1.9.0"
-=======
-    version: "1.8.1"
->>>>>>> e75982f2791452de63be77ad130996a8865e5d3c
   stack_trace:
     dependency: transitive
     description:
@@ -484,11 +468,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.4.12"
-=======
-    version: "0.4.8"
->>>>>>> e75982f2791452de63be77ad130996a8865e5d3c
   typed_data:
     dependency: transitive
     description:

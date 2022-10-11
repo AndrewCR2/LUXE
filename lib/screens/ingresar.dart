@@ -10,6 +10,8 @@ import 'dart:convert' as convert;
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/user_profile_provider.dart';
+
 class Ingresar extends StatefulWidget {
   const Ingresar({Key? key}) : super(key: key);
 
@@ -182,7 +184,11 @@ class _IngresarState extends State<Ingresar> {
                   onTap: ()async{
                     User? user = await Authenticator.InitSign(
                       context: context);
-                    print(user?.displayName);
+                    print({
+                      user?.displayName,
+                      user?.email,
+                      user?.photoURL
+                    });
                   },
                   child: Container(
                     height: 45,

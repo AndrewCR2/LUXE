@@ -19,7 +19,7 @@ class Authenticator{
 
       try {
         UserCredential userCredential = await authenticator.signInWithCredential(credential);
-
+        // print(userCredential);
         user = userCredential.user;
         return user;
       }on FirebaseAuthException catch (e) {
