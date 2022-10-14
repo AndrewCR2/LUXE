@@ -46,6 +46,8 @@ class MyApp extends StatelessWidget {
           'verificacion': (_) => Verificacion(),
           'almacen': (_) => const AlmacenScreen(),
           'agregar_item': (_) => const AgregarItemScreen(),
+          'cambiada': (_) => Contra_cambiada(),
+          'formulario': (_) => Form_items(),
         });
   }
 }

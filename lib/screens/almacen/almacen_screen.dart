@@ -57,11 +57,9 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
           const _CustomSliverAppBar(),
           SliverList(
               delegate: SliverChildListDelegate([
-                
             (userProfileProvider.user != null)
-            ? HeaderAlmacen(userProfile: userProfileProvider.user!)
-            :const _HeaderLoading(),
-
+                ? HeaderAlmacen(userProfile: userProfileProvider.user!)
+                : const _HeaderLoading(),
             const Padding(
                 padding: EdgeInsets.only(left: 20, top: 20, bottom: 10),
                 child: Text('Almacen',
@@ -76,7 +74,7 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
         child: const Icon(Icons.add),
         backgroundColor: const Color(0xffFDC500),
         onPressed: () {
-          Navigator.pushNamed(context, 'agregar_item');
+          Navigator.pushNamed(context, 'formulario');
         },
       ),
     );
@@ -117,14 +115,14 @@ class _HeaderLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
       height: 130,
       color: const Color(0xff00509d),
       child: Container(
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: const Center(
-          child: CircularProgressIndicator(color:  Colors.grey),
+          child: CircularProgressIndicator(color: Colors.grey),
         ),
       ),
     );
