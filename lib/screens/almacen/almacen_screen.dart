@@ -74,7 +74,7 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
         child: const Icon(Icons.add),
         backgroundColor: const Color(0xffFDC500),
         onPressed: () {
-          Navigator.pushNamed(context, 'agregar_item');
+          Navigator.pushNamed(context, 'formulario');
         },
       ),
     );
