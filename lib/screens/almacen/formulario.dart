@@ -10,8 +10,11 @@ class Form_items extends StatefulWidget {
 }
 
 class Form_itemsState extends State<Form_items> {
-  /* final _formKey = GlobalKey<FormState>(); */
+  // final _formKey = GlobalKey<FormState>();
   /* final txtCorreo = TextEditingController(); */
+  final txtNombre = TextEditingController();
+  final txtDesc = TextEditingController();
+  String dropCurrentValue = '634ad5deb7793722bcb60981';
   File? imagen = null;
   final picker = ImagePicker();
   Future selImagen(op) async {
@@ -140,7 +143,7 @@ class Form_itemsState extends State<Form_items> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           color: Colors.black,
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () => {Navigator.of(context).pop()},
         ),
       ),
@@ -148,14 +151,16 @@ class Form_itemsState extends State<Form_items> {
         child: Container(
           padding: const EdgeInsets.all(20.0),
           child: Form(
+              // key: _formKey,
               child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Registrar Productos:',
                   style: GoogleFonts.urbanist(
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                       color: Color.fromRGBO(0, 41, 107, 1),
@@ -163,116 +168,178 @@ class Form_itemsState extends State<Form_items> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 35,
+              // SizedBox(
+              //   height: 35,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Color.fromRGBO(232, 236, 244, 1),
+              //         ),
+              //         borderRadius: BorderRadius.circular(5.5),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(
+              //           color: Color.fromRGBO(232, 236, 244, 1),
+              //         ),
+              //         borderRadius: BorderRadius.circular(5.5),
+              //       ), // Outline Input Border
+              //       labelText: "Código del producto",
+              //       labelStyle: GoogleFonts.urbanist(
+              //         textStyle: TextStyle(
+              //           color: Color.fromRGBO(131, 145, 161, 1),
+              //         ),
+              //       ),
+              //       filled: true,
+              //       fillColor: Color.fromRGBO(247, 248, 249, 1)),
+              // ),
+              const SizedBox(
+                height: 40,
               ),
-              SizedBox(
-                height: 20,
-              ),
+
+              //===================      NOMBRE     ===============================
               TextFormField(
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color.fromRGBO(232, 236, 244, 1),
                       ),
                       borderRadius: BorderRadius.circular(5.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(232, 236, 244, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(5.5),
-                    ), // Outline Input Border
-                    labelText: "Código del producto",
-                    labelStyle: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
-                        color: Color.fromRGBO(131, 145, 161, 1),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Color.fromRGBO(247, 248, 249, 1)),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color.fromRGBO(232, 236, 244, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(5.5),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color.fromRGBO(232, 236, 244, 1),
                       ),
                       borderRadius: BorderRadius.circular(5.5),
                     ), // Outline Input Border
                     labelText: "Nombre del Producto",
                     labelStyle: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Color.fromRGBO(131, 145, 161, 1),
                       ),
                     ),
                     filled: true,
-                    fillColor: Color.fromRGBO(247, 248, 249, 1)),
+                    fillColor: const Color.fromRGBO(247, 248, 249, 1)),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor ingrese el nombre del producto';
                   }
                 },
+                controller: txtNombre,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
+              //===================     DESCRIPCIÓN     ===============================
               TextFormField(
                 decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color.fromRGBO(232, 236, 244, 1),
                       ),
                       borderRadius: BorderRadius.circular(5.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color.fromRGBO(232, 236, 244, 1),
                       ),
                       borderRadius: BorderRadius.circular(5.5),
                     ), // Outline Input Border
                     labelText: "Descripción del Producto",
                     labelStyle: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Color.fromRGBO(131, 145, 161, 1),
                       ),
                     ),
                     filled: true,
-                    fillColor: Color.fromRGBO(247, 248, 249, 1)),
+                    fillColor: const Color.fromRGBO(247, 248, 249, 1)),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Es necesario que describa su producto';
                   }
                 },
+                controller: txtDesc,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                child: Column(
-                  children: [
-                    ElevatedButton(
+              //===================    SELECCIONAR CONTENEDOR    ===================================
+              const Text(
+                'Seleciona el Contenedor',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromRGBO(0, 41, 107, 1)),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              InputDecorator(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                      items: const [
+                        DropdownMenuItem(
+                          value: '634ad5deb7793722bcb60981',
+                          child: Text('AAA'),
+                        ),
+                        DropdownMenuItem(
+                          value: '634ad5eab7793722bcb60985',
+                          child: Text('BBB'),
+                        ),
+                        DropdownMenuItem(
+                          value: '634ad5fdb7793722bcb60989',
+                          child: Text('CCC'),
+                        ),
+                      ],
+                      value: dropCurrentValue,
+                      onChanged: (String? valueIn) {
+                        setState(() {
+                          dropCurrentValue = valueIn!;
+                        });
+                      }),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              //===================    SUBIR IMAGEN    ==========================
+              Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
                       onPressed: () {
                         opciones(context);
                       },
-                      child: Text(
-                        'Subir Imagen',
-                        style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                              letterSpacing: 1),
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.save_alt),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Subir Imagen',
+                            style: GoogleFonts.urbanist(
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  letterSpacing: 1),
+                            ),
+                          ),
+                        ],
                       ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -280,21 +347,23 @@ class Form_itemsState extends State<Form_items> {
                         ),
                       ),
                     ),
-                    imagen != null ? Image.file(imagen!) : Center()
-                  ],
-                ),
+                  ),
+                  imagen != null ? Image.file(imagen!) : Center()
+                ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+
+              //====================    REGISTRAR     =====================
+              SizedBox(
                 width: double.infinity,
                 height: 55,
                 child: ElevatedButton(
                   child: Text(
                     'Registrar',
                     style: GoogleFonts.urbanist(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: Colors.white,
@@ -303,7 +372,7 @@ class Form_itemsState extends State<Form_items> {
                   ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(253, 197, 0, 1),
+                        const Color.fromRGBO(253, 197, 0, 1),
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -314,6 +383,11 @@ class Form_itemsState extends State<Form_items> {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Inicie Sesión')));
                     } */
+                    print('=====================');
+                    print(txtNombre.text);
+                    print(txtDesc.text);
+                    print(dropCurrentValue);
+                    print('=====================');
                   },
                 ),
               ),

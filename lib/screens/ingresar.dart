@@ -123,7 +123,7 @@ class _IngresarState extends State<Ingresar> {
                             },
                             child: Icon(_obscureText
                                 ? Icons.visibility
-                                : Icons.visibility_off),
+                                : Icons.visibility_off, color: const Color.fromRGBO(0, 41, 107, 1),),
                           ),
                         ),
                         controller: txtPass,
@@ -185,11 +185,7 @@ class _IngresarState extends State<Ingresar> {
                       onTap: () async {
                         User? user =
                             await Authenticator.InitSign(context: context);
-                        print('=========================');
                         print(user?.displayName);
-                        print(user?.email);
-                        print(user?.photoURL);
-                        print('=========================');
                       },
                       child: Container(
                         height: 45,
