@@ -119,7 +119,7 @@ class _inventario extends StatelessWidget {
               height: 67,
               width: 67,
               decoration: new BoxDecoration(
-                          image: new DecorationImage(image: AssetImage('assets/inventario.JPG'),
+                          image: new DecorationImage(image: AssetImage('assets/contenedor.JPG'),
                                                      fit: BoxFit.fill
                                                     ),
                           borderRadius: BorderRadius.circular(30)   
@@ -127,13 +127,13 @@ class _inventario extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Text('Inventario', style: TextStyle(fontSize: 20),), 
+              child: Text('Adquirir Contenedor', style: TextStyle(fontSize: 20),), 
               ),
           ],
         ),
         
         onPressed: (){
-
+          Navigator.pushReplacementNamed(context, 'form_contenedor');
         },
       ),
     );
