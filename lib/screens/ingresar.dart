@@ -256,7 +256,7 @@ void ingresar(email, pass, BuildContext context) async {
 
       Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
-      Navigator.pushReplacementNamed(context, 'almacen');
+      Navigator.pushReplacementNamed(context, 'principal');
     } else {
       print('Usuario incorrecto');
     }
