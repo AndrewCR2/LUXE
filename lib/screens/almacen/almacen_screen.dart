@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/search/objetos_search.dart';
+import 'package:luxe/widgets/menu.dart';
 import 'package:luxe/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
 
     return Scaffold(
-      drawer: Drawer(),
+      drawer: myMenu(),
       body: CustomScrollView(
         slivers: [
           const _CustomSliverAppBar(),

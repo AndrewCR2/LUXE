@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
@@ -48,6 +49,8 @@ class MyApp extends StatelessWidget {
           'agregar_item': (_) => const AgregarItemScreen(),
           'cambiada': (_) => Contra_cambiada(),
           'formulario': (_) => Form_items(),
+          'principal': (_) => Principal(),
+
         });
   }
 }
