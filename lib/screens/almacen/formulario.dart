@@ -489,13 +489,13 @@ Future<void> subir_imagen( {
   required String id
   }) async {
     try {
-      String filename = imagen!.path.split('/').last;
+      String filename = imagen.path.split('/').last;
       print('========================');
       print(filename);
       print('========================');
 
       FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(imagen!.path, filename: filename)
+        'file': await MultipartFile.fromFile(imagen.path, filename: filename)
       });
 
       await dio
