@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/models/user_profile_response.dart';
 
 class CardItem extends StatelessWidget {
-  final Map<String, dynamic> objeto;
+  final ItemElement objeto;
   const CardItem({Key? key, required this.objeto}) : super(key: key);
 
   @override
@@ -21,32 +22,41 @@ class CardItem extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(15)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(15), topLeft: Radius.circular(15)),
-            child: Image(
-              image: NetworkImage(objeto['img']),
+            child:
+            (objeto.imgClient != '')?
+              FadeInImage(
+                placeholder: const  AssetImage('assets/Loading_icon.gif'),
+              image: NetworkImage(objeto.imgClient),
               height: 120,
               width: 140,
               fit: BoxFit.cover,
-            ),
+            ):
+            const Image(
+              image:AssetImage('assets/no-image.jpg'),
+              height: 120,
+              width: 140,
+              fit: BoxFit.cover,
+            )
           ),
           Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
             Text(
-              objeto['name'],
+              objeto.name,
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              'ABA',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+            Text(
+              objeto.description,
+              style: TextStyle(fontSize: 14, color: Colors.grey[899]),
             ),
             ]),
           )

@@ -61,6 +61,7 @@ class ContainerElement {
         required this.maximumSpace,
         required this.typeContainer,
         required this.user,
+        required this.assignUser,
     });
 
     String id;
@@ -69,6 +70,7 @@ class ContainerElement {
     int maximumSpace;
     String typeContainer;
     String user;
+    String assignUser;
 
     factory ContainerElement.fromJson(String str) => ContainerElement.fromMap(json.decode(str));
 
@@ -81,6 +83,7 @@ class ContainerElement {
         maximumSpace: json["maximum_space"],
         typeContainer: json["type_container"],
         user: json["user"],
+        assignUser: json["assign_user"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -90,13 +93,14 @@ class ContainerElement {
         "maximum_space": maximumSpace,
         "type_container": typeContainer,
         "user": user,
+        "assign_user": assignUser,
     };
 }
 
 class UserProfileResponseItem {
     UserProfileResponseItem({
         required this.total,
-        required this.items,
+        required  this.items,
     });
 
     int total;
@@ -121,6 +125,7 @@ class ItemElement {
     ItemElement({
         required this.id,
         required this.name,
+        required this.description,
         required this.imgClient,
         required this.imgStore,
         required this.user,
@@ -129,6 +134,7 @@ class ItemElement {
 
     String id;
     String name;
+    String description;
     String imgClient;
     String imgStore;
     String user;
@@ -141,6 +147,7 @@ class ItemElement {
     factory ItemElement.fromMap(Map<String, dynamic> json) => ItemElement(
         id: json["_id"],
         name: json["name"],
+        description: json["description"],
         imgClient: json["img_client"],
         imgStore: json["img_store"],
         user: json["user"],
@@ -150,6 +157,7 @@ class ItemElement {
     Map<String, dynamic> toMap() => {
         "_id": id,
         "name": name,
+        "description": description,
         "img_client": imgClient,
         "img_store": imgStore,
         "user": user,
@@ -196,3 +204,4 @@ class User {
         "address": address,
     };
 }
+

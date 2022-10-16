@@ -46,11 +46,9 @@ class MyApp extends StatelessWidget {
           'olvide_contraseña': (_) => Olvide_Contra(),
           'verificacion': (_) => Verificacion(),
           'almacen': (_) => const AlmacenScreen(),
-          'agregar_item': (_) => const AgregarItemScreen(),
           'cambiada': (_) => Contra_cambiada(),
-          'formulario': (_) => Form_items(),
+          'formulario_items': (_) => Form_items(),
           'principal': (_) => Principal(),
-
         });
   }
 }

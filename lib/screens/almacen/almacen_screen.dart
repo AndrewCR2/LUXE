@@ -15,41 +15,13 @@ class AlmacenScreen extends StatefulWidget {
 class _AlmacenScreenState extends State<AlmacenScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> objetos = [
-      {
-        'name': 'Bici',
-        'img': 'https://i.blogs.es/c90a6d/ftnom1twiaevulz/450_1000.jpg',
-      },
-      {
-        'name': 'cajas',
-        'img':
-            'https://www.embalatgescastonbox.com/FitxersWeb/7901/cajas_etiquetadas.jpg',
-      },
-      {
-        'name': 'Mueble',
-        'img':
-            'https://www.arqhys.com/wp-content/uploads/2012/12/Muebles-en-piel-sintetica.jpg',
-      },
-      {
-        'name': 'Bici',
-        'img': 'https://i.blogs.es/c90a6d/ftnom1twiaevulz/450_1000.jpg',
-      },
-      {
-        'name': 'cajas',
-        'img':
-            'https://www.embalatgescastonbox.com/FitxersWeb/7901/cajas_etiquetadas.jpg',
-      },
-      {
-        'name': 'Mueble',
-        'img':
-            'https://www.arqhys.com/wp-content/uploads/2012/12/Muebles-en-piel-sintetica.jpg',
-      },
-    ];
+    
+    final userProfileProvider = Provider.of<UserProfileProvider>(context);
+
+    final userItems =  userProfileProvider.items; // lista de items del usuario
 
     final List<Widget> items = List.generate(
-        objetos.length, (index) => CardItem(objeto: objetos[index]));
-
-    final userProfileProvider = Provider.of<UserProfileProvider>(context);
+        userItems.length, (index) => CardItem(objeto: userItems[index]));
 
     return Scaffold(
       drawer: myMenu(),
@@ -75,7 +47,7 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
         child: const Icon(Icons.add),
         backgroundColor: const Color(0xffFDC500),
         onPressed: () {
-          Navigator.pushNamed(context, 'formulario');
+          Navigator.pushNamed(context, 'formulario_items');
         },
       ),
     );

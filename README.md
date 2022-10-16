@@ -8,3 +8,6 @@ El proyecto está enfocado a ayudar a las personas que no tienen espacio en sus 
 
 [API desplegada](https://luxe-api-rest-production.up.railway.app)
 
+TODO:
+
+- en el registro de usarios solo debe aparecer los contenedores a los que esta asignado

@@ -239,6 +239,7 @@ class _IngresarState extends State<Ingresar> {
 void ingresar(email, pass, BuildContext context) async {
   try {
     var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
+    // var url = Uri.http('localhost:8080', '/api/auth');
 
     var response = await http
         .post(url,
