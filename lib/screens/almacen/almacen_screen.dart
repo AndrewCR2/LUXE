@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/search/objetos_search.dart';
+import 'package:luxe/widgets/menu.dart';
 import 'package:luxe/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -14,54 +15,24 @@ class AlmacenScreen extends StatefulWidget {
 class _AlmacenScreenState extends State<AlmacenScreen> {
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> objetos = [
-      {
-        'name': 'Bici',
-        'img': 'https://i.blogs.es/c90a6d/ftnom1twiaevulz/450_1000.jpg',
-      },
-      {
-        'name': 'cajas',
-        'img':
-            'https://www.embalatgescastonbox.com/FitxersWeb/7901/cajas_etiquetadas.jpg',
-      },
-      {
-        'name': 'Mueble',
-        'img':
-            'https://www.arqhys.com/wp-content/uploads/2012/12/Muebles-en-piel-sintetica.jpg',
-      },
-      {
-        'name': 'Bici',
-        'img': 'https://i.blogs.es/c90a6d/ftnom1twiaevulz/450_1000.jpg',
-      },
-      {
-        'name': 'cajas',
-        'img':
-            'https://www.embalatgescastonbox.com/FitxersWeb/7901/cajas_etiquetadas.jpg',
-      },
-      {
-        'name': 'Mueble',
-        'img':
-            'https://www.arqhys.com/wp-content/uploads/2012/12/Muebles-en-piel-sintetica.jpg',
-      },
-    ];
-
-    final List<Widget> items = List.generate(
-        objetos.length, (index) => CardItem(objeto: objetos[index]));
-
+    
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
 
+    final userItems =  userProfileProvider.items; // lista de items del usuario
+
+    final List<Widget> items = List.generate(
+        userItems.length, (index) => CardItem(objeto: userItems[index]));
+
     return Scaffold(
-      drawer: Drawer(),
+      drawer: myMenu(),
       body: CustomScrollView(
         slivers: [
           const _CustomSliverAppBar(),
           SliverList(
               delegate: SliverChildListDelegate([
-                
             (userProfileProvider.user != null)
-            ? HeaderAlmacen(userProfile: userProfileProvider.user!)
-            :const _HeaderLoading(),
-
+                ? HeaderAlmacen(userProfile: userProfileProvider.user!)
+                : const _HeaderLoading(),
             const Padding(
                 padding: EdgeInsets.only(left: 20, top: 20, bottom: 10),
                 child: Text('Almacen',
@@ -76,7 +47,7 @@ class _AlmacenScreenState extends State<AlmacenScreen> {
         child: const Icon(Icons.add),
         backgroundColor: const Color(0xffFDC500),
         onPressed: () {
-          Navigator.pushNamed(context, 'agregar_item');
+          Navigator.pushNamed(context, 'formulario_items');
         },
       ),
     );
@@ -117,14 +88,14 @@ class _HeaderLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
       height: 130,
       color: const Color(0xff00509d),
       child: Container(
-         decoration: BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: const Center(
-          child: CircularProgressIndicator(color:  Colors.grey),
+          child: CircularProgressIndicator(color: Colors.grey),
         ),
       ),
     );

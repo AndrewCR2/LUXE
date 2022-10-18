@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/screens/go_sign/google_sign.dart';
 import 'dart:convert' as convert;
 
@@ -122,7 +123,7 @@ class _IngresarState extends State<Ingresar> {
                             },
                             child: Icon(_obscureText
                                 ? Icons.visibility
-                                : Icons.visibility_off),
+                                : Icons.visibility_off, color: const Color.fromRGBO(0, 41, 107, 1),),
                           ),
                         ),
                         controller: txtPass,
@@ -238,6 +239,7 @@ class _IngresarState extends State<Ingresar> {
 void ingresar(email, pass, BuildContext context) async {
   try {
     var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
+    // var url = Uri.http('localhost:8080', '/api/auth');
 
     var response = await http
         .post(url,
@@ -256,7 +258,7 @@ void ingresar(email, pass, BuildContext context) async {
 
       Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
-      Navigator.pushReplacementNamed(context, 'almacen');
+      Navigator.pushReplacementNamed(context, 'principal');
     } else {
       print('Usuario incorrecto');
       showDialog(

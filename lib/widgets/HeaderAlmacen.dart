@@ -39,7 +39,7 @@ class HeaderAlmacen extends StatelessWidget {
                   height: 10,
                 ),
                 
-                const Text('Tu plan vence el 04/11', style: TextStyle(fontSize: 15)),
+                // const Text('Tu plan vence el 04/11', style: TextStyle(fontSize: 15)),
               ],
             ),
             Expanded(

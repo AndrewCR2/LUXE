@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/screens/contenedores.dart';
+import 'package:luxe/screens/pasarela_pago.dart';
+import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
@@ -45,7 +48,12 @@ class MyApp extends StatelessWidget {
           'olvide_contraseña': (_) => Olvide_Contra(),
           'verificacion': (_) => Verificacion(),
           'almacen': (_) => const AlmacenScreen(),
-          'agregar_item': (_) => const AgregarItemScreen(),
+          'cambiada': (_) => Contra_cambiada(),
+          'formulario_items': (_) => Form_items(),
+          'principal': (_) => Principal(),
+          'form_contenedor': (_) => formContenedor(),
+          'pasarela_pago': (_) => pasarelaPago()
+
         });
   }
 }
