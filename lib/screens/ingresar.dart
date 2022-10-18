@@ -30,7 +30,7 @@ class _IngresarState extends State<Ingresar> {
 
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
+    // Firebase.initializeApp();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -156,94 +156,49 @@ class _IngresarState extends State<Ingresar> {
                         email = txtEmail.text;
                         password = txtPass.text;
 
-                const SizedBox(height: 10,),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 170),
-                  child: InkWell(
-                    child: const Text('Olvidaste la contraseña?',style: TextStyle(color: Colors.grey),),
-                    onTap: (){
-                      Navigator.pushNamed(context, 'olvide_contraseña');
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                Center(
-                child: GestureDetector(
-                    onTap: (){
-                      email = txtEmail.text;
-                      password = txtPass.text;
-
-                      ingresar(email, password, context);
-                    },
-                    child: Container(
-                    child: const Center(child: Text('Acceder',style: TextStyle(color: Colors.white),)),
-                    height: 60,
-                    width: 340,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9),
-                      color: Colors.amber
-                    ),
-                  ),
-                  ),
-              ),
-
-              const SizedBox(height: 40),
-
-              const Center(child: Text('O inicia sesion con',style: TextStyle(color: Colors.grey),)),
-
-              const SizedBox(height: 15),
-
-              Center(
-                child: GestureDetector(
-                  onTap: ()async{
-                    User? user = await Authenticator.InitSign(
-                      context: context);
-                    print({
-                      user?.displayName,
-                      user?.email,
-                      user?.photoURL
-                    });
-                  },
-                  child: Container(
-                    height: 45,
-                    width: 60,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(9),
-                        image: const DecorationImage(image: AssetImage('assets/google.png'), fit: BoxFit.cover),
+                        ingresar(email, password, context);
+                      },
+                      child: Container(
+                        child: const Center(
+                            child: Text(
+                          'Acceder',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                        height: 60,
+                        width: 340,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9),
+                            color: Colors.amber),
                       ),
                     ),
                   ),
                   const SizedBox(height: 40),
-                  const Center(
-                      child: Text(
-                    'O inicia sesion con',
-                    style: TextStyle(color: Colors.grey),
-                  )),
-                  const SizedBox(height: 15),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        User? user =
-                            await Authenticator.InitSign(context: context);
-                        print(user?.displayName);
-                      },
-                      child: Container(
-                        height: 45,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(9),
-                          image: const DecorationImage(
-                              image: AssetImage('assets/google.png'),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const Center(
+                  //     child: Text(
+                  //   'O inicia sesion con',
+                  //   style: TextStyle(color: Colors.grey),
+                  // )),
+                  // const SizedBox(height: 15),
+                  // Center(
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       User? user =
+                  //           await Authenticator.InitSign(context: context);
+                  //       print(user?.displayName);
+                  //     },
+                  //     child: Container(
+                  //       height: 45,
+                  //       width: 60,
+                  //       decoration: BoxDecoration(
+                  //         border: Border.all(color: Colors.grey),
+                  //         borderRadius: BorderRadius.circular(9),
+                  //         image: const DecorationImage(
+                  //             image: AssetImage('assets/google.png'),
+                  //             fit: BoxFit.cover),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -304,6 +259,38 @@ void ingresar(email, pass, BuildContext context) async {
       Navigator.pushReplacementNamed(context, 'almacen');
     } else {
       print('Usuario incorrecto');
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'LUX',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(
+                        'Email o contraseña incorrecto, vuelve a verificar tu datos',
+                        style: TextStyle(fontSize: 20))
+                  ],
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 39, 64, 176))),
+                  child: Text('Aceptar', style: TextStyle(fontSize: 20)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
     }
   } catch (Error) {
     print(Error);
