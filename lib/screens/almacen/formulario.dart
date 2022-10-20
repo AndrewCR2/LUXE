@@ -10,6 +10,8 @@ import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/alert.dart';
+
 class Form_items extends StatefulWidget {
   Form_items({Key? key}) : super(key: key);
   @override
@@ -17,7 +19,6 @@ class Form_items extends StatefulWidget {
 }
 
 class Form_itemsState extends State<Form_items> {
-
   final _formKey = GlobalKey<FormState>();
 
   final txtNombre = TextEditingController();
@@ -44,7 +45,7 @@ class Form_itemsState extends State<Form_items> {
   }
 
   Dio dio = Dio();
-  
+
   opciones(context) {
     showDialog(
         context: context,
@@ -147,18 +148,18 @@ class Form_itemsState extends State<Form_items> {
 
   @override
   Widget build(BuildContext context) {
-
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
-    final List<ContainerElement> userContainers = userProfileProvider.containers;
+    final List<ContainerElement> userContainers =
+        userProfileProvider.containers;
 
-     final List<DropdownMenuItem<String>> containers= List.generate(
-        userContainers.length, (index){
-          final container = userContainers[index];
-          return DropdownMenuItem(
-                              value: container.id,
-                              child: Text(container.name),
-                            );
-        });
+    final List<DropdownMenuItem<String>> containers =
+        List.generate(userContainers.length, (index) {
+      final container = userContainers[index];
+      return DropdownMenuItem(
+        value: container.id,
+        child: Text(container.name),
+      );
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -316,7 +317,6 @@ class Form_itemsState extends State<Form_items> {
                               child: Text('Contenedores'),
                             ),
                             ...containers
-                          
                           ],
                           value: dropCurrentValue,
                           onChanged: (String? valueIn) {
@@ -397,23 +397,22 @@ class Form_itemsState extends State<Form_items> {
                             borderRadius: BorderRadius.circular(7),
                           ))),
                       onPressed: () async {
-                        
-                        if(txtNombre.text == '' || txtDesc.text == '' || imagen == null){
+                        if (txtNombre.text == '' ||
+                            txtDesc.text == '' ||
+                            imagen == null) {
                           return displayGoodAlert(
                               context: context,
-                              icon: Icons.sentiment_dissatisfied, 
+                              icon: Icons.sentiment_dissatisfied,
                               message: 'Los campos son obligatorios',
-                              color: Colors.yellow[700]!
-                            );
+                              color: Colors.yellow[700]!);
                         }
 
-                        if(dropCurrentValue == '123'){
-                            return displayGoodAlert(
+                        if (dropCurrentValue == '123') {
+                          return displayGoodAlert(
                               context: context,
-                              icon: Icons.sentiment_dissatisfied, 
+                              icon: Icons.sentiment_dissatisfied,
                               message: 'Elige un contenedor',
-                              color: Colors.yellow[700]!
-                            );
+                              color: Colors.yellow[700]!);
                         }
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -450,27 +449,25 @@ class Form_itemsState extends State<Form_items> {
                             print('El id del item es: ' + jsonResponse['_id']);
                             final idNewItem = jsonResponse['_id'];
 
-                            
-                            await subir_imagen(dio: dio, imagen: imagen!, id: idNewItem);
+                            await subir_imagen(
+                                dio: dio, imagen: imagen!, id: idNewItem);
                             Provider.of<UserProfileProvider>(context,
                                     listen: false)
                                 .getUserProfile(context);
 
                             displayGoodAlert(
-                              context: context,
-                              icon: Icons.task_alt, 
-                              message: 'Se ha guardado correctamente',
-                              color: Colors.greenAccent[400]!
-                            );
+                                context: context,
+                                icon: Icons.task_alt,
+                                message: 'Se ha guardado correctamente',
+                                color: Colors.greenAccent[400]!);
                           }
                         } catch (error) {
                           print(error);
-                            displayGoodAlert(
+                          displayGoodAlert(
                               context: context,
-                              icon: Icons.highlight_off, 
+                              icon: Icons.highlight_off,
                               message: 'El registro ha fallado',
-                              color: Colors.red[400]!
-                            );
+                              color: Colors.red[400]!);
                         }
                       },
                     ),
@@ -483,76 +480,27 @@ class Form_itemsState extends State<Form_items> {
   }
 }
 
-Future<void> subir_imagen( {
-  required Dio dio, 
-  required File imagen, 
-  required String id
-  }) async {
-    try {
-      String filename = imagen.path.split('/').last;
-      print('========================');
-      print(filename);
-      print('========================');
+Future<void> subir_imagen(
+    {required Dio dio, required File imagen, required String id}) async {
+  try {
+    String filename = imagen.path.split('/').last;
+    print('========================');
+    print(filename);
+    print('========================');
 
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(imagen.path, filename: filename)
-      });
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(imagen.path, filename: filename)
+    });
 
-      await dio
-          .putUri(
-              Uri.https('luxe-api-rest-production.up.railway.app',
-                  '/api/uploads/items/' + id),
-              data: formData)
-          .then((value) {
-        print(value);
-      });
-    } catch (e) {
-      print(e.toString());
-    }
+    await dio
+        .putUri(
+            Uri.https('luxe-api-rest-production.up.railway.app',
+                '/api/uploads/items/' + id),
+            data: formData)
+        .then((value) {
+      print(value);
+    });
+  } catch (e) {
+    print(e.toString());
   }
-
-
-displayGoodAlert({
-   required BuildContext context,
-   required IconData icon,
-   required String message,
-   required Color color
-  }) {
-  showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: 110,
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16, color: Colors.grey.shade900),
-                )
-              ],
-            ),
-            actions: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                      child: const Text('Ok',
-                          style: TextStyle(fontSize: 18, color: Colors.indigo)),
-                      onPressed: () => Navigator.pop(context)),
-                ],
-              )
-            ],
-          ));
 }

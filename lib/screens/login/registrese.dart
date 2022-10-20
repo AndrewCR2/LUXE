@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../../helpers/alert.dart';
+
 class Registro extends StatefulWidget {
   Registro({Key? key}) : super(key: key);
 
@@ -230,11 +232,18 @@ class _RegistroState extends State<Registro> {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Inicie Sesión')));
+                          if (txtContra != txtConfir_Contra) {
+                            return displayGoodAlert(
+                                context: context,
+                                icon: Icons.sentiment_dissatisfied,
+                                message: 'Verifique la contraseña',
+                                color: Colors.yellow[700]!);
+                          }
+                          name = txtNombre.text;
+                          email = txtCorreo.text;
+                          password = txtContra.text;
+                          registrar(name, email, password, context);
                         }
-                        name = txtNombre.text;
-                        email = txtCorreo.text;
-                        password = txtContra.text;
-                        registrar(name, email, password, context);
                       },
                     ),
                   ),
@@ -271,3 +280,6 @@ void registrar(name, email, pass, BuildContext context) async {
     print('http error');
   }
 }
+
+/*ALERTA */
+ 
