@@ -232,7 +232,7 @@ class _RegistroState extends State<Registro> {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Inicie Sesión')));
-                          if (txtContra != txtConfir_Contra) {
+                          if (txtContra.text != txtConfir_Contra.text) {
                             return displayGoodAlert(
                                 context: context,
                                 icon: Icons.sentiment_dissatisfied,
