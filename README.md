@@ -6,5 +6,5 @@ El proyecto está enfocado a ayudar a las personas que no tienen espacio en sus 
 
 [Repositorio del API](https://github.com/g-susvs/LUXE-API-REST)
 
-[API desplegada](https://luxe-api-rest-production.up.railway.app)
+[API desplegada](https://luxe-api-rest-production-e0e0.up.railway.app/)
 
