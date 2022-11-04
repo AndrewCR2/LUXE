@@ -491,10 +491,9 @@ Future<void> subir_imagen(
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(imagen.path, filename: filename)
     });
-
     await dio
         .putUri(
-            Uri.https('luxe-api-rest-production.up.railway.app',
+            Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
                 '/api/uploads/items/' + id),
             data: formData)
         .then((value) {

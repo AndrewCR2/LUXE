@@ -102,7 +102,7 @@ class _inventario extends StatelessWidget {
       child: TextButton(
         //icon: Icon(Icons.abc),
         style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         child: Row(
           children: [
@@ -154,7 +154,7 @@ class _almacen extends StatelessWidget {
       height: 78,
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         child: Row(
           children: [
@@ -201,7 +201,7 @@ class _salidaAlmacen extends StatelessWidget {
       height: 78,
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         child: Row(
           children: [
@@ -246,7 +246,7 @@ class _traspaso extends StatelessWidget {
       height: 78,
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
         child: Row(
           children: [

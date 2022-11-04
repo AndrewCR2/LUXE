@@ -4,7 +4,8 @@ import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 
 class UserProfileProvider extends ChangeNotifier {
-  final String _baseUrl = "luxe-api-rest-production.up.railway.app";
+  final String _baseUrl = "luxe-api-rest-production-e0e0.up.railway.app";
+  // final String _baseUrl = "luxe-api-rest-production.up.railway.app";
   // final String _baseUrl = "localhost:8080";
 
   UserProfileResponse? user;

@@ -232,7 +232,7 @@ class _RegistroState extends State<Registro> {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Inicie Sesión')));
-                          if (txtContra != txtConfir_Contra) {
+                          if (txtContra.text != txtConfir_Contra.text) {
                             return displayGoodAlert(
                                 context: context,
                                 icon: Icons.sentiment_dissatisfied,
@@ -259,7 +259,9 @@ void registrar(name, email, pass, BuildContext context) async {
   // print(name + email + pass);
   try {
     var url =
-        Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
+        Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/users');
+        // Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
+https://luxe-api-rest-production-e0e0.up.railway.app/
 
     var response = await http
         .post(url,
