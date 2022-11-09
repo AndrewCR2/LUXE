@@ -151,6 +151,7 @@ class _IngresarState extends State<Ingresar> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -159,6 +160,7 @@ class _IngresarState extends State<Ingresar> {
 
                         ingresar(email, password, context);
                       },
+                      
                       child: Container(
                         child: const Center(
                             child: Text(
@@ -169,37 +171,39 @@ class _IngresarState extends State<Ingresar> {
                         width: 340,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(9),
-                            color: Colors.amber),
+                            color: Colors.amber,
+                            
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 40),
-                  // const Center(
-                  //     child: Text(
-                  //   'O inicia sesion con',
-                  //   style: TextStyle(color: Colors.grey),
-                  // )),
-                  // const SizedBox(height: 15),
-                  // Center(
-                  //   child: GestureDetector(
-                  //     onTap: () async {
-                  //       User? user =
-                  //           await Authenticator.InitSign(context: context);
-                  //       print(user?.displayName);
-                  //     },
-                  //     child: Container(
-                  //       height: 45,
-                  //       width: 60,
-                  //       decoration: BoxDecoration(
-                  //         border: Border.all(color: Colors.grey),
-                  //         borderRadius: BorderRadius.circular(9),
-                  //         image: const DecorationImage(
-                  //             image: AssetImage('assets/google.png'),
-                  //             fit: BoxFit.cover),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  const Center(
+                      child: Text(
+                    'O inicia sesion con',
+                    style: TextStyle(color: Colors.grey),
+                  )),
+                  const SizedBox(height: 15),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        User? user =
+                            await Authenticator.InitSign(context: context);
+                        print(user?.displayName);
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(9),
+                          image: const DecorationImage(
+                              image: AssetImage('assets/google.png'),
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -257,7 +261,15 @@ void ingresar(email, pass, BuildContext context) async {
     if (jsonResponse['msg'] == 'Bienvenido') {
       Preferences.token = jsonResponse['token']; // Guardamos el token
 
-      Provider.of<UserProfileProvider>(context, listen: false)
+      showDialog(
+        context: context, 
+        builder: (context){
+
+          return Center(child: CircularProgressIndicator());
+        }
+      );
+
+      await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
       Navigator.pushReplacementNamed(context, 'principal');
     } else {
