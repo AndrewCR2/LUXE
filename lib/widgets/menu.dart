@@ -1,83 +1,126 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
+import 'package:luxe/widgets/usuario_screen.dart';
 
 class myMenu extends StatefulWidget {
-  @override
+  // final UserProfileResponse userProfile;
+
+  //myMenu({Key? key, required this.userProfile}) : super(key: key);
+
   State<myMenu> createState() => _myMenuState();
 }
 
 class _myMenuState extends State<myMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      color: Color.fromARGB(255, 165, 162, 162),
-      child: ListView(
-        padding: EdgeInsets.only(top: 50.0),
+    return Drawer(
+      child: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            height: 180,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/LUXE.png'), fit: BoxFit.fill),
-            ),
-          ),
-          Divider(),
-          ListTile(
-            title: const Text(
-              'Home',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-            trailing: const Icon(
-              Icons.home,
-              size: 30.0,
-              color: Colors.black,
-            ),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, 'principal');
-            },
-          ),
-          Container(
-            height: 5,
-            color: Color.fromARGB(255, 165, 162, 162),
-          ),
-          const ListTile(
-            title: Text(
-              'Estado de cuenta',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            trailing: Icon(
-              Icons.bar_chart,
-              size: 40.0,
-              color: Colors.black,
-            ),
-          ),
-          Container(
-            height: 230,
-            color: Color.fromARGB(255, 165, 162, 162),
-          ),
-          Divider(),
-          ListTile(
-            title: const Text('Cerrar Sesión',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)),
-            trailing:
-                const Icon(Icons.exit_to_app, size: 30.0, color: Colors.black),
-            onTap: () {
-              Preferences.token = '';
-              Navigator.restorablePopAndPushNamed(context, 'ruta_ingresar');
-            },
-          )
+          buildHeader(context),
+          buildMenuItems(context),
         ],
-      ),
+      )),
     );
   }
+
+  Widget buildHeader(BuildContext context) => Material(
+        color: Color.fromRGBO(10, 37, 106, 1),
+        child: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => UsuarioScreen()));
+          },
+          child: Container(
+            padding: EdgeInsets.only(
+                top: 24 + MediaQuery.of(context).padding.top, bottom: 24),
+            child: Column(
+              children: [
+                Container(
+                  child: CircleAvatar(
+                    radius: 52,
+                    backgroundImage: AssetImage('assets/LUXE.png'),
+                    backgroundColor: Color.fromRGBO(0, 217, 219, 1),
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3.0),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "LUEXE",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontFamily: 'Roboto-Italic',
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'andrew54gmail.com',
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.white,
+                    fontFamily: 'Roboto-Italic',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+  Widget buildMenuItems(BuildContext context) => Container(
+        padding: EdgeInsets.all(10),
+        child: Wrap(
+          children: [
+            ListTile(
+              title: const Text(
+                'Home',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Roboto-Italic',
+                ),
+              ),
+              leading: const Icon(
+                Icons.home,
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, 'principal');
+              },
+            ),
+            ListTile(
+              title: const Text('Estado de cuenta',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Roboto-Italic',
+                  )),
+              leading: Icon(
+                Icons.bar_chart,
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: const Text('Cerrar Sesión',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Roboto-Italic',
+                  )),
+              leading: const Icon(
+                Icons.exit_to_app,
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, 'ruta_ingresar');
+              },
+            )
+          ],
+        ),
+      );
 }

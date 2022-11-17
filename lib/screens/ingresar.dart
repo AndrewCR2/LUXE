@@ -121,9 +121,12 @@ class _IngresarState extends State<Ingresar> {
                                 _obscureText = !_obscureText;
                               });
                             },
-                            child: Icon(_obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off, color: const Color.fromRGBO(0, 41, 107, 1),),
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: const Color.fromRGBO(0, 41, 107, 1),
+                            ),
                           ),
                         ),
                         controller: txtPass,
@@ -151,7 +154,6 @@ class _IngresarState extends State<Ingresar> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  
                   Center(
                     child: GestureDetector(
                       onTap: () {
@@ -160,7 +162,6 @@ class _IngresarState extends State<Ingresar> {
 
                         ingresar(email, password, context);
                       },
-                      
                       child: Container(
                         child: const Center(
                             child: Text(
@@ -170,9 +171,8 @@ class _IngresarState extends State<Ingresar> {
                         height: 60,
                         width: 340,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9),
-                            color: Colors.amber,
-                            
+                          borderRadius: BorderRadius.circular(9),
+                          color: Colors.amber,
                         ),
                       ),
                     ),
@@ -242,7 +242,8 @@ class _IngresarState extends State<Ingresar> {
 
 void ingresar(email, pass, BuildContext context) async {
   try {
-    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
+    var url =
+        Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
     // var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
     // var url = Uri.http('localhost:8080', '/api/auth');
 
@@ -262,18 +263,17 @@ void ingresar(email, pass, BuildContext context) async {
       Preferences.token = jsonResponse['token']; // Guardamos el token
 
       showDialog(
-        context: context, 
-        builder: (context){
-
-          return Center(child: CircularProgressIndicator());
-        }
-      );
+          context: context,
+          builder: (context) {
+            return Center(child: CircularProgressIndicator());
+          });
 
       await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
       Navigator.pushReplacementNamed(context, 'principal');
     } else {
       print('Usuario incorrecto');
+      print(jsonResponse);
       showDialog(
           context: context,
           barrierDismissible: false,
