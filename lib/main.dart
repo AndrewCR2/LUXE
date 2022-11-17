@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/screens/contenedores.dart';
+import 'package:luxe/screens/login/elegirPlan.dart';
 import 'package:luxe/screens/pasarela_pago.dart';
 import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
@@ -51,9 +52,9 @@ class MyApp extends StatelessWidget {
           'cambiada': (_) => Contra_cambiada(),
           'formulario_items': (_) => Form_items(),
           'principal': (_) => Principal(),
+          'Elegir_plan': (_) => ElegirPlan(),
           'form_contenedor': (_) => formContenedor(),
-          'pasarela_pago': (_) => pasarelaPago()
-
+          'pasarela_pago': (_) => pasarelaPago(),
         });
   }
 }

@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/shared_preferences/preferences.dart';
 import 'dart:convert' as convert;
 
 import '../../helpers/alert.dart';
@@ -25,6 +27,7 @@ class _RegistroState extends State<Registro> {
   String name = '';
   String email = '';
   String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,7 +234,7 @@ class _RegistroState extends State<Registro> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Inicie Sesión')));
+                              const SnackBar(content: Text('Validando...')));
                           if (txtContra.text != txtConfir_Contra.text) {
                             return displayGoodAlert(
                                 context: context,
@@ -260,8 +263,8 @@ void registrar(name, email, pass, BuildContext context) async {
   try {
     var url =
         Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/users');
-        // Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
-https://luxe-api-rest-production-e0e0.up.railway.app/
+    // Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
+    https: //luxe-api-rest-production-e0e0.up.railway.app/
 
     var response = await http
         .post(url,
@@ -275,8 +278,13 @@ https://luxe-api-rest-production-e0e0.up.railway.app/
             }))
         .timeout(const Duration(seconds: 90));
 
-    print(response.body);
-    Navigator.pushNamed(context, 'ruta_ingresar');
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (jsonResponse['msg'] == 'Te has registrado') {
+      Preferences.token = jsonResponse['token']; // Guardamos el token
+      Navigator.pushReplacementNamed(context, 'Elegir_plan');
+    }
   } catch (Error) {
     print(Error);
     print('http error');
@@ -284,4 +292,5 @@ https://luxe-api-rest-production-e0e0.up.railway.app/
 }
 
 /*ALERTA */
- 
+
+
