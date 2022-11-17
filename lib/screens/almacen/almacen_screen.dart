@@ -15,16 +15,14 @@ class AlmacenScreen extends StatefulWidget {
 class _AlmacenScreenState extends State<AlmacenScreen> {
   @override
   Widget build(BuildContext context) {
-    
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
 
-    final userItems =  userProfileProvider.items; // lista de items del usuario
+    final userItems = userProfileProvider.items; // lista de items del usuario
 
     final List<Widget> items = List.generate(
         userItems.length, (index) => CardItem(objeto: userItems[index]));
 
     return Scaffold(
-      drawer: myMenu(),
       body: CustomScrollView(
         slivers: [
           const _CustomSliverAppBar(),
@@ -65,6 +63,12 @@ class _CustomSliverAppBar extends StatelessWidget {
     return SliverAppBar(
       floating: true,
       centerTitle: true,
+      pinned: true,
+      leading: IconButton(
+        color: Color.fromRGBO(0, 217, 219, 1),
+        icon: Icon(Icons.arrow_back_ios_new),
+        onPressed: () => {Navigator.of(context).pop()},
+      ),
       title: const Text(
         'LUXE Almacen',
       ),
