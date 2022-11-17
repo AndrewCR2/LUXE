@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/shared_preferences/preferences.dart';
 import 'dart:convert' as convert;
 
 import '../../helpers/alert.dart';
@@ -23,7 +24,7 @@ class _RegistroState extends State<Registro> {
   final txtCorreo = TextEditingController();
   final txtContra = TextEditingController();
   final txtConfir_Contra = TextEditingController();
-  
+
   String name = '';
   String email = '';
   String password = '';
@@ -296,55 +297,60 @@ class _RegistroState extends State<Registro> {
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
-                      child: Text(
-                        'Registrar',
-                        style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                              letterSpacing: 1),
-                        ),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromRGBO(253, 197, 0, 1),
+                        child: Text(
+                          'Registrar',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.white,
+                                letterSpacing: 1),
                           ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ))),
-                      onPressed: () {
-                        final bool isValid =
-                            EmailValidator.validate(txtCorreo.text.trim());
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(253, 197, 0, 1),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7),
+                            ))),
+                        onPressed: () {
+                          final bool isValid =
+                              EmailValidator.validate(txtCorreo.text.trim());
 
-                        if (_formKey.currentState!.validate()) {
-                          if (txtContra.text != txtConfir_Contra.text ||
-                              txtContra.text.length <= 8) {
-                            return displayGoodAlert(
-                                context: context,
-                                icon: Icons.sentiment_dissatisfied,
-                                message: 'Verifique la contraseña',
-                                color: Colors.yellow[700]!);
-                          }
-                   
-                          if (isValid) {
+                          if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Correo validado')));
-                            name = txtNombre.text;
-                            email = txtCorreo.text;
-                            password = txtContra.text;
-                            registrar(name, email, password, context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Inicie Sesión')));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text('Ingrese un correo valido')));
+                                const SnackBar(content: Text('Validando...')));
+                            if (txtContra.text != txtConfir_Contra.text) {
+                              if (txtContra.text != txtConfir_Contra.text ||
+                                  txtContra.text.length <= 8) {
+                                return displayGoodAlert(
+                                    context: context,
+                                    icon: Icons.sentiment_dissatisfied,
+                                    message: 'Verifique la contraseña',
+                                    color: Colors.yellow[700]!);
+                              }
+
+                              if (isValid) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Correo validado')));
+                                name = txtNombre.text;
+                                email = txtCorreo.text;
+                                password = txtContra.text;
+                                registrar(name, email, password, context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Inicie Sesión')));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text('Ingrese un correo valido')));
+                              }
+                            }
                           }
-                        }
-                      },
-                    ),
+                        }),
                   ),
                 ],
               )),
@@ -373,9 +379,14 @@ void registrar(name, email, pass, BuildContext context) async {
               'password': pass
             }))
         .timeout(const Duration(seconds: 90));
-     
-    print(response.body);
-    Navigator.pushNamed(context, 'ruta_ingresar');
+
+    var jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (jsonResponse['msg'] == 'Te has registrado') {
+      Preferences.token = jsonResponse['token']; // Guardamos el token
+      Navigator.pushReplacementNamed(context, 'Elegir_plan');
+    }
   } catch (Error) {
     print(Error);
     print('http error');
@@ -383,4 +394,5 @@ void registrar(name, email, pass, BuildContext context) async {
 }
 
 /*ALERTA */
- 
+
+
