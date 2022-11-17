@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/widgets/menu.dart';
 
 class Principal extends StatefulWidget {

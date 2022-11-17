@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/gestures.dart';
+
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +19,7 @@ class Registro extends StatefulWidget {
 class _RegistroState extends State<Registro> {
   final _formKey = GlobalKey<FormState>();
   bool obscuretext = true;
+  bool _isVisible = true;
   final txtNombre = TextEditingController();
   final txtCorreo = TextEditingController();
   final txtContra = TextEditingController();
@@ -27,6 +28,21 @@ class _RegistroState extends State<Registro> {
   String name = '';
   String email = '';
   String password = '';
+
+  bool _isPasswordEightCharacters = false;
+  bool _hasPasswordOneNumber = false;
+
+  onPasswordChanged(String password) {
+    final numericRegex = RegExp(r'[0-9]');
+
+    setState(() {
+      _isPasswordEightCharacters = false;
+      if (password.length >= 8) _isPasswordEightCharacters = true;
+
+      _hasPasswordOneNumber = false;
+      if (numericRegex.hasMatch(password)) _hasPasswordOneNumber = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +148,8 @@ class _RegistroState extends State<Registro> {
                     height: 20,
                   ),
                   TextFormField(
+                    obscureText: !_isVisible,
+                    onChanged: (password) => onPasswordChanged(password),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -146,15 +164,21 @@ class _RegistroState extends State<Registro> {
                           borderRadius: BorderRadius.circular(5.5),
                         ), // Outline Input Border
                         labelText: "Contraseña",
-                        suffixIcon: GestureDetector(
-                          onTap: () {
+                        suffixIcon: IconButton(
+                          onPressed: () {
                             setState(() {
-                              obscuretext = !obscuretext;
+                              _isVisible = !_isVisible;
                             });
                           },
-                          child: Icon(obscuretext
-                              ? Icons.visibility_off
-                              : Icons.visibility),
+                          icon: _isVisible
+                              ? Icon(
+                                  Icons.visibility,
+                                  color: Color.fromARGB(255, 117, 117, 117),
+                                )
+                              : Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
                         ),
                         labelStyle: GoogleFonts.urbanist(
                           textStyle: TextStyle(
@@ -164,7 +188,6 @@ class _RegistroState extends State<Registro> {
                         filled: true,
                         fillColor: Color.fromRGBO(247, 248, 249, 1)),
                     controller: txtContra,
-                    obscureText: obscuretext,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor Ingrese su contraseña';
@@ -172,7 +195,69 @@ class _RegistroState extends State<Registro> {
                     },
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            color: _isPasswordEightCharacters
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _isPasswordEightCharacters
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Contiene al menos 8 caracteres")
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 500),
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            color: _hasPasswordOneNumber
+                                ? Colors.green
+                                : Colors.transparent,
+                            border: _hasPasswordOneNumber
+                                ? Border.all(color: Colors.transparent)
+                                : Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Contiene al menos 1 número")
+                    ],
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
@@ -212,43 +297,60 @@ class _RegistroState extends State<Registro> {
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
-                      child: Text(
-                        'Registrar',
-                        style: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                              letterSpacing: 1),
-                        ),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromRGBO(253, 197, 0, 1),
+                        child: Text(
+                          'Registrar',
+                          style: GoogleFonts.urbanist(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.white,
+                                letterSpacing: 1),
                           ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ))),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Validando...')));
-                          if (txtContra.text != txtConfir_Contra.text) {
-                            return displayGoodAlert(
-                                context: context,
-                                icon: Icons.sentiment_dissatisfied,
-                                message: 'Verifique la contraseña',
-                                color: Colors.yellow[700]!);
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(253, 197, 0, 1),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7),
+                            ))),
+                        onPressed: () {
+                          final bool isValid =
+                              EmailValidator.validate(txtCorreo.text.trim());
+
+                          if (_formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Validando...')));
+                            if (txtContra.text != txtConfir_Contra.text) {
+                              if (txtContra.text != txtConfir_Contra.text ||
+                                  txtContra.text.length <= 8) {
+                                return displayGoodAlert(
+                                    context: context,
+                                    icon: Icons.sentiment_dissatisfied,
+                                    message: 'Verifique la contraseña',
+                                    color: Colors.yellow[700]!);
+                              }
+
+                              if (isValid) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Correo validado')));
+                                name = txtNombre.text;
+                                email = txtCorreo.text;
+                                password = txtContra.text;
+                                registrar(name, email, password, context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Inicie Sesión')));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text('Ingrese un correo valido')));
+                              }
+                            }
                           }
-                          name = txtNombre.text;
-                          email = txtCorreo.text;
-                          password = txtContra.text;
-                          registrar(name, email, password, context);
-                        }
-                      },
-                    ),
+                        }),
                   ),
                 ],
               )),

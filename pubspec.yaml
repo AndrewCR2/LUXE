@@ -29,6 +29,7 @@ environment:
 dependencies:
   carousel_slider: ^4.1.1
   card_swiper: ^2.0.4
+  email_validator: ^2.0.1
   firebase_auth: ^3.11.2
   google_sign_in: ^5.4.2
   firebase_core: ^1.24.0

@@ -421,7 +421,7 @@ class Form_itemsState extends State<Form_items> {
 
                         try {
                           final url = Uri.https(
-                              'luxe-api-rest-production.up.railway.app',
+                              'luxe-api-rest-production-e0e0.up.railway.app',
                               '/api/items');
                           // final url = Uri.http(
                           //     'localhost:8080',
