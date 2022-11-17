@@ -55,7 +55,7 @@ class _IngresarState extends State<Ingresar> {
                     child: Text(
                       'Bienvenido!',
                       style: GoogleFonts.urbanist(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                           color: Color.fromRGBO(0, 41, 107, 1),
@@ -65,7 +65,7 @@ class _IngresarState extends State<Ingresar> {
                   ),
                   const SizedBox(height: 90),
                   Center(
-                    child: SingleChildScrollView(
+                    child: SizedBox(
                       child: TextFormField(
                         autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
@@ -78,7 +78,7 @@ class _IngresarState extends State<Ingresar> {
                             hintText: '',
                             labelText: 'Ingrese su correo',
                             labelStyle: GoogleFonts.urbanist(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                 color: Color.fromRGBO(131, 145, 161, 1),
                               ),
                             ),
@@ -95,7 +95,7 @@ class _IngresarState extends State<Ingresar> {
                   ),
                   const SizedBox(height: 20),
                   Center(
-                    child: SingleChildScrollView(
+                    child: SizedBox(
                       child: TextFormField(
                         autocorrect: false,
                         obscureText: _obscureText,
@@ -242,9 +242,9 @@ class _IngresarState extends State<Ingresar> {
 
 void ingresar(email, pass, BuildContext context) async {
   try {
-    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
+    // var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
     // var url = Uri.https('luxe-api-rest-production.up.railway.app', '/api/auth');
-    // var url = Uri.http('localhost:8080', '/api/auth');
+    var url = Uri.http('localhost:8080', '/api/auth');
 
     var response = await http
         .post(url,
@@ -272,21 +272,26 @@ void ingresar(email, pass, BuildContext context) async {
       await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
       Navigator.pushReplacementNamed(context, 'principal');
-    } else {
+    } else if(jsonResponse['msg'] == 'No tienes cuenta'){
+      print('=======================');
+      print(jsonResponse['msg']);
+      print('=======================');
+    }
+    else {
       print('Usuario incorrecto');
       showDialog(
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(
+              title: const Text(
                 'LUX',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               content: SingleChildScrollView(
                 child: ListBody(
-                  children: [
+                  children:const [
                     Text(
                         'Email o contraseña incorrecto, vuelve a verificar tu datos',
                         style: TextStyle(fontSize: 20))
@@ -297,8 +302,8 @@ void ingresar(email, pass, BuildContext context) async {
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 39, 64, 176))),
-                  child: Text('Aceptar', style: TextStyle(fontSize: 20)),
+                          const Color.fromARGB(255, 39, 64, 176))),
+                  child: const Text('Aceptar', style: TextStyle(fontSize: 20)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
