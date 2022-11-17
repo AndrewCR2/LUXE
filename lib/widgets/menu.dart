@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/models/user_profile_response.dart';
+import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/widgets/usuario_screen.dart';
+import 'package:provider/provider.dart';
 
 class myMenu extends StatefulWidget {
   // final UserProfileResponse userProfile;
@@ -14,19 +16,21 @@ class myMenu extends StatefulWidget {
 class _myMenuState extends State<myMenu> {
   @override
   Widget build(BuildContext context) {
+
+    final userProfileProvider = Provider.of<UserProfileProvider>(context);
     return Drawer(
       child: SingleChildScrollView(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          buildHeader(context),
+          buildHeader(userProfileProvider.user!.user ,context),
           buildMenuItems(context),
         ],
       )),
     );
   }
 
-  Widget buildHeader(BuildContext context) => Material(
+  Widget buildHeader(User user ,BuildContext context) => Material(
         color: Color.fromRGBO(10, 37, 106, 1),
         child: InkWell(
           onTap: () {
@@ -54,7 +58,7 @@ class _myMenuState extends State<myMenu> {
                   height: 12,
                 ),
                 Text(
-                  "LUEXE",
+                  user.name,
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
@@ -65,7 +69,7 @@ class _myMenuState extends State<myMenu> {
                   height: 5,
                 ),
                 Text(
-                  'andrew54gmail.com',
+                  user.email,
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.white,
