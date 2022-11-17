@@ -69,7 +69,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   Widget buildCoverImage() => Container(
       color: Colors.grey,
       child: Image.network(
-        'https://img.freepik.com/foto-gratis/covid-19-trabajadores-salud-concepto-pandemia-hermosa-solicita-medico-asiatico-enfermera-matorrales-mostrando-gesto-corazon-sonriendo-cuidando-pacientes-amor-fondo-blanco_1258-84118.jpg?w=1800&t=st=1656779950~exp=1656780550~hmac=7fd2fb4cbbabaf308f0fcf8bc96f23b616a5f5d8f6c2dafe6d7a372891166e0d',
+        'https://www.movint.es/wp-content/uploads/2020/07/26-ERGONOMIA-CONVENCIONAL-2-scaled-2194x1097.jpg',
         width: double.infinity,
         height: coverHeight,
         fit: BoxFit.cover,
