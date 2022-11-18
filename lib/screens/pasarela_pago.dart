@@ -37,6 +37,23 @@ class _pasarelaPagoState extends State<pasarelaPago> {
             key: _formkey,
             child: Column(
               children: <Widget>[
+                const Text(
+                      'Para continuar por favor  ',
+                      style: TextStyle(fontSize: 25,
+                                       color: Color.fromARGB(255, 14, 108, 185),
+                                       fontWeight: FontWeight.bold,
+                                      ),
+                    ),
+                const Text(
+                      'registre su método de pago:  ',
+                      style: TextStyle(fontSize: 25,
+                                       color: Color.fromARGB(255, 14, 108, 185),
+                                       fontWeight: FontWeight.bold,
+                                      ),
+                    ), 
+                    SizedBox(
+                  height: 20,
+                ),  
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     height: 190,
@@ -103,9 +120,13 @@ class _pasarelaPagoState extends State<pasarelaPago> {
                     margin: EdgeInsets.all(15),
                     width: MediaQuery.of(context).size.width - 30,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Tarjeta registrada')));
+                            Navigator.pushNamed(context, 'principal');
+                        },
                         child: Text(
-                          'Pagar',
+                          'Registrar tarjeta',
                           style: TextStyle(fontSize: 20),
                         )))
               ],

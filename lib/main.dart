@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:luxe/screens/contenedores.dart';
+import 'package:luxe/providers/container_profile_provider.dart';
+import 'package:luxe/screens/contenedores/form_contenedores.dart';
+import 'package:luxe/screens/contenedores/lista_contenedores.dart';
 import 'package:luxe/screens/login/elegirPlan.dart';
 import 'package:luxe/screens/pasarela_pago.dart';
 import 'package:luxe/screens/principal.dart';
@@ -24,7 +26,11 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserProfileProvider(),
           lazy: false,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ContenedorProvider(),
+          lazy: false,
+          )
       ],
       child: const MyApp(),
     );
@@ -56,6 +62,7 @@ class MyApp extends StatelessWidget {
           'form_contenedor': (_) => formContenedor(),
           'pasarela_pago': (_) => pasarelaPago(),
           'estado_cuenta': (_) => const EstadoCuentaScreen(),
+          'lista_contenedores': (_) => listaContenedor()
         });
   }
 }
