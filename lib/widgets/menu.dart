@@ -23,6 +23,7 @@ class _myMenuState extends State<myMenu> {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          
           buildHeader(userProfileProvider.user!.user ,context),
           buildMenuItems(context),
         ],
@@ -100,6 +101,7 @@ class _myMenuState extends State<myMenu> {
                 Navigator.pushReplacementNamed(context, 'principal');
               },
             ),
+            Divider(),
             ListTile(
               title: const Text('Estado de cuenta',
                   style: TextStyle(
@@ -109,6 +111,9 @@ class _myMenuState extends State<myMenu> {
               leading: Icon(
                 Icons.bar_chart,
               ),
+              onTap: (){
+                Navigator.pushNamed(context, 'estado_cuenta');
+              },
             ),
             Divider(),
             ListTile(

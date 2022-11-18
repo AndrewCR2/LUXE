@@ -242,9 +242,9 @@ class _IngresarState extends State<Ingresar> {
 
 void ingresar(email, pass, BuildContext context) async {
   try {
-    // var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
-    var url =
-        Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
+    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
+    // var url =
+        // Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
     // var url = Uri.http('localhost:8080', '/api/auth');
 
     var response = await http
@@ -275,6 +275,8 @@ void ingresar(email, pass, BuildContext context) async {
       print('=======================');
       print(jsonResponse['msg']);
       print('=======================');
+      Preferences.token = jsonResponse['token']; // Guardamos el token
+      Navigator.pushReplacementNamed(context, 'Elegir_plan');
     }
     else {
       print('Usuario incorrecto');

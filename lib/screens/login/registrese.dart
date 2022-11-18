@@ -316,15 +316,17 @@ class _RegistroState extends State<Registro> {
                               borderRadius: BorderRadius.circular(7),
                             ))),
                         onPressed: () {
+                          print('======================');
+                          print('iniciando la petición');
+                          print('======================');
                           final bool isValid =
                               EmailValidator.validate(txtCorreo.text.trim());
 
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Validando...')));
-                            if (txtContra.text != txtConfir_Contra.text) {
                               if (txtContra.text != txtConfir_Contra.text ||
-                                  txtContra.text.length <= 8) {
+                                  txtContra.text.length < 8) {
                                 return displayGoodAlert(
                                     context: context,
                                     icon: Icons.sentiment_dissatisfied,
@@ -347,7 +349,6 @@ class _RegistroState extends State<Registro> {
                                     SnackBar(
                                         content:
                                             Text('Ingrese un correo valido')));
-                              }
                             }
                           }
                         }),
@@ -366,7 +367,6 @@ void registrar(name, email, pass, BuildContext context) async {
     var url =
         Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/users');
     // Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
-    https: //luxe-api-rest-production-e0e0.up.railway.app/
 
     var response = await http
         .post(url,

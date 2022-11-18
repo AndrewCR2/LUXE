@@ -5,10 +5,10 @@ import 'package:luxe/shared_preferences/preferences.dart';
 
 class UserProfileProvider extends ChangeNotifier {
   final String _baseUrl = "luxe-api-rest-production-e0e0.up.railway.app";
-  // final String _baseUrl = "luxe-api-rest-production.up.railway.app";
   // final String _baseUrl = "localhost:8080";
 
   UserProfileResponse? user;
+  Account? account;  
   List<ItemElement> items = [];
   List<ContainerElement> containers = [];
 
@@ -27,6 +27,7 @@ class UserProfileProvider extends ChangeNotifier {
       }
 
       user = UserProfileResponse.fromJson(response.body);
+      account = user!.account;
       items = user!.item.items;
       containers = user!.container.containers;
 

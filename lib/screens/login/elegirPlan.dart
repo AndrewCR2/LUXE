@@ -62,6 +62,13 @@ class _ElegirPlan extends State<ElegirPlan> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                planes('Mensual', 600, context);
+                              },
+                              child: MasPlanes('assets/contenedor.JPG', 'Plan',
+                                  'Mensual', 600),
+                            ),
+                            GestureDetector(
+                              onTap: () {
                                 planes('Trimestral', 1100, context);
                               },
                               child: MasPlanes('assets/contenedor.JPG', 'Plan',
@@ -73,20 +80,6 @@ class _ElegirPlan extends State<ElegirPlan> {
                               },
                               child: MasPlanes(
                                   'assets/camion.JPG', 'Plan', 'Anual', 10000),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                planes('Mensual', 600, context);
-                              },
-                              child: MasPlanes('assets/contenedor.JPG', 'Plan',
-                                  'Mensual', 600),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                planes('Mensual', 500, context);
-                              },
-                              child: MasPlanes('assets/contenedor.JPG', 'Plan',
-                                  'Mensual', 500),
                             ),
                           ],
                         ),
@@ -155,12 +148,15 @@ Widget MasPlanes(String imagen, String name, String subname, int precio) {
 }
 
 void planes(String subname, int precio, BuildContext context) async {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(child: CircularProgressIndicator());
+          });
   try {
     var url = Uri.https(
         'luxe-api-rest-production-e0e0.up.railway.app', '/api/account');
 
-    print(subname);
-    print(precio);
     var response = await http
         .post(url,
             headers: <String, String>{
@@ -173,12 +169,12 @@ void planes(String subname, int precio, BuildContext context) async {
               "rental_price": precio,
             }))
         .timeout(const Duration(seconds: 90));
+
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (jsonResponse['msg'] == 'create account') {
-      Preferences.token = jsonResponse['token'];
-      Provider.of<UserProfileProvider>(context, listen: false)
+      await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context); // Guardamos el token
       Navigator.pushReplacementNamed(context, 'principal');
     } else {

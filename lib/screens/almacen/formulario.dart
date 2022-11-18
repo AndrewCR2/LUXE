@@ -192,35 +192,6 @@ class Form_itemsState extends State<Form_items> {
                       ),
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 35,
-                  // ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // TextFormField(
-                  //   decoration: InputDecoration(
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(
-                  //           color: Color.fromRGBO(232, 236, 244, 1),
-                  //         ),
-                  //         borderRadius: BorderRadius.circular(5.5),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(
-                  //           color: Color.fromRGBO(232, 236, 244, 1),
-                  //         ),
-                  //         borderRadius: BorderRadius.circular(5.5),
-                  //       ), // Outline Input Border
-                  //       labelText: "Código del producto",
-                  //       labelStyle: GoogleFonts.urbanist(
-                  //         textStyle: TextStyle(
-                  //           color: Color.fromRGBO(131, 145, 161, 1),
-                  //         ),
-                  //       ),
-                  //       filled: true,
-                  //       fillColor: Color.fromRGBO(247, 248, 249, 1)),
-                  // ),
                   const SizedBox(
                     height: 40,
                   ),

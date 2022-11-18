@@ -15,33 +15,62 @@ class _PrincipalState extends State<Principal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      drawer: myMenu(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 20,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 28,
-              ),
-              onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-            ),
-          ),
-          Title(),
-          _inventario(),
-          _almacen(),
-          _salidaAlmacen(),
-          _traspaso()
-        ],
-      ),
-    );
+        key: _scaffoldKey,
+        drawer: myMenu(),
+        body: Container(
+            margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                    size: 28,
+                  ),
+                  onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                ),
+                const Title(),
+                const SizedBox(
+                  height: 30,
+                ),
+                Column(
+                  children: const [
+                    _PrincipalCard(
+                        color: Color.fromARGB(255, 236, 195, 90),
+                        nameCard: 'Adquirir Contenedor',
+                        pathImg: 'assets/contenedor.JPG',
+                        rutaScreen: 'form_contenedor'),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _PrincipalCard(
+                        color: Color.fromARGB(243, 134, 216, 67),
+                        nameCard: 'Almacen',
+                        pathImg: 'assets/derecha.JPG',
+                        rutaScreen: 'almacen'),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // _PrincipalCard(
+                    //   color: Color.fromARGB(243, 223, 91, 172),
+                    //   nameCard: 'Salida Almacen',
+                    //   pathImg: 'assets/izquierda.JPG',
+                    //   rutaScreen:  'no hay'),
+                    //   SizedBox(height: 20,),
+                    // _PrincipalCard(
+                    //   color: Color.fromARGB(243, 60, 115, 234),
+                    //   nameCard: 'Traspaso',
+                    //   pathImg: 'assets/camion.JPG',
+                    //   rutaScreen:  'no hay'),
+                  ],
+                )
+              ],
+            ))
+
+        // _salidaAlmacen(),
+        // _traspaso()
+        );
   }
 }
 
@@ -54,29 +83,24 @@ class Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Bienvenido !',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 14, 108, 185),
                     fontSize: 25),
               ),
-              /* Text(
-                    userProfile.user.name,
-                    style: TextStyle(fontSize: 25, color: Color(0xff00509d), fontWeight: FontWeight.bold),
-                  ), */
-
               Container(
                 height: 20,
               ),
-              Text('¿Qué deseas hacer?',
+              const Text('¿Qué deseas hacer?',
                   style: TextStyle(color: Colors.black, fontSize: 18)),
             ],
           ),
@@ -86,190 +110,53 @@ class Title extends StatelessWidget {
   }
 }
 
-class _inventario extends StatelessWidget {
-  const _inventario({
-    Key? key,
-  }) : super(key: key);
+class _PrincipalCard extends StatelessWidget {
+  final Color color;
+  final String nameCard;
+  final String rutaScreen;
+  final String pathImg;
+
+  const _PrincipalCard(
+      {Key? key,
+      required this.color,
+      required this.nameCard,
+      required this.pathImg,
+      required this.rutaScreen})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 236, 195, 90)),
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 28),
-      width: 350,
-      height: 78,
-      child: TextButton(
-        //icon: Icon(Icons.abc),
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
-        ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, rutaScreen);
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               height: 67,
               width: 67,
-              decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                      image: AssetImage('assets/contenedor.JPG'),
-                      fit: BoxFit.fill),
-                  borderRadius: BorderRadius.circular(30)),
-            ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Adquirir Contenedor',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        onPressed: () {
-          Navigator.pushNamed(context, 'form_contenedor');
-        },
-      ),
-    );
-  }
-}
-
-class _almacen extends StatelessWidget {
-  const _almacen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(243, 134, 216, 67)),
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 28),
-      width: 350,
-      height: 78,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 67,
-              width: 67,
-              decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                      image: AssetImage('assets/derecha.JPG'),
-                      fit: BoxFit.fill),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(pathImg), fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(30)),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                'Almacen',
-                style: TextStyle(fontSize: 20),
+                nameCard,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: const TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
           ],
         ),
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, 'almacen');
-        },
-      ),
-    );
-  }
-}
-
-class _salidaAlmacen extends StatelessWidget {
-  const _salidaAlmacen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(243, 223, 91, 172)),
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 28),
-      width: 350,
-      height: 78,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 67,
-              width: 67,
-              decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                      image: AssetImage('assets/izquierda.JPG'),
-                      fit: BoxFit.fill),
-                  borderRadius: BorderRadius.circular(30)),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Salida Almacen',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
-        ),
-        onPressed: () {},
-      ),
-    );
-  }
-}
-
-class _traspaso extends StatelessWidget {
-  const _traspaso({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: new BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(243, 60, 115, 234)),
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 28),
-      width: 350,
-      height: 78,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 67,
-              width: 67,
-              decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                      image: AssetImage('assets/camion.JPG'), fit: BoxFit.fill),
-                  borderRadius: BorderRadius.circular(30)),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Traspaso',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
-        ),
-        onPressed: () {},
       ),
     );
   }

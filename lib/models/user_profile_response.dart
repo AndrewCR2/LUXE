@@ -1,14 +1,19 @@
+// To parse this JSON data, do
+//
+//     final userProfileResponse = userProfileResponseFromMap(jsonString);
 
 import 'dart:convert';
 
 class UserProfileResponse {
     UserProfileResponse({
         required this.user,
+        required this.account,
         required this.container,
         required this.item,
     });
 
     User user;
+    Account account;
     UserProfileResponseContainer container;
     UserProfileResponseItem item;
 
@@ -18,14 +23,56 @@ class UserProfileResponse {
 
     factory UserProfileResponse.fromMap(Map<String, dynamic> json) => UserProfileResponse(
         user: User.fromMap(json["user"]),
+        account: Account.fromMap(json["account"]),
         container: UserProfileResponseContainer.fromMap(json["container"]),
         item: UserProfileResponseItem.fromMap(json["item"]),
     );
 
     Map<String, dynamic> toMap() => {
         "user": user.toMap(),
+        "account": account.toMap(),
         "container": container.toMap(),
         "item": item.toMap(),
+    };
+}
+
+class Account {
+    Account({
+        required this.id,
+        required this.user,
+        required this.registrationDate,
+        required this.plan,
+        required this.rentalPrice,
+        required this.expirationDate,
+    });
+
+    String id;
+    String user;
+    int registrationDate;
+    String plan;
+    int rentalPrice;
+    int expirationDate;
+
+    factory Account.fromJson(String str) => Account.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory Account.fromMap(Map<String, dynamic> json) => Account(
+        id: json["_id"],
+        user: json["user"],
+        registrationDate: json["registration_date"],
+        plan: json["plan"],
+        rentalPrice: json["rental_price"],
+        expirationDate: json["expiration_date"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "_id": id,
+        "user": user,
+        "registration_date": registrationDate,
+        "plan": plan,
+        "rental_price": rentalPrice,
+        "expiration_date": expirationDate,
     };
 }
 
@@ -57,18 +104,22 @@ class ContainerElement {
     ContainerElement({
         required this.id,
         required this.name,
+        required this.nameByUser,
         required this.nroItems,
         required this.maximumSpace,
         required this.typeContainer,
+        required this.rental,
         required this.user,
         required this.assignUser,
     });
 
     String id;
     String name;
+    String nameByUser;
     int nroItems;
     int maximumSpace;
     String typeContainer;
+    int rental;
     String user;
     String assignUser;
 
@@ -79,9 +130,11 @@ class ContainerElement {
     factory ContainerElement.fromMap(Map<String, dynamic> json) => ContainerElement(
         id: json["_id"],
         name: json["name"],
+        nameByUser: json["name_by_user"],
         nroItems: json["nro_items"],
         maximumSpace: json["maximum_space"],
         typeContainer: json["type_container"],
+        rental: json["rental"],
         user: json["user"],
         assignUser: json["assign_user"],
     );
@@ -89,9 +142,11 @@ class ContainerElement {
     Map<String, dynamic> toMap() => {
         "_id": id,
         "name": name,
+        "name_by_user": nameByUser,
         "nro_items": nroItems,
         "maximum_space": maximumSpace,
         "type_container": typeContainer,
+        "rental": rental,
         "user": user,
         "assign_user": assignUser,
     };
@@ -100,7 +155,7 @@ class ContainerElement {
 class UserProfileResponseItem {
     UserProfileResponseItem({
         required this.total,
-        required  this.items,
+        required this.items,
     });
 
     int total;
@@ -204,4 +259,3 @@ class User {
         "address": address,
     };
 }
-

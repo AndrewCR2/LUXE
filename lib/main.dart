@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
           'Elegir_plan': (_) => ElegirPlan(),
           'form_contenedor': (_) => formContenedor(),
           'pasarela_pago': (_) => pasarelaPago(),
+          'estado_cuenta': (_) => const EstadoCuentaScreen(),
         });
   }
 }
