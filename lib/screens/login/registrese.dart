@@ -341,9 +341,9 @@ class _RegistroState extends State<Registro> {
                                 email = txtCorreo.text;
                                 password = txtContra.text;
                                 registrar(name, email, password, context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Inicie Sesión')));
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     const SnackBar(
+                                //         content: Text('Inicie Sesión')));
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -385,7 +385,7 @@ void registrar(name, email, pass, BuildContext context) async {
 
     if (jsonResponse['msg'] == 'Te has registrado') {
       Preferences.token = jsonResponse['token']; // Guardamos el token
-      Navigator.pushReplacementNamed(context, 'Elegir_plan');
+      Navigator.pushNamed(context, 'Elegir_plan');
     }
   } catch (Error) {
     print(Error);

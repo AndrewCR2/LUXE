@@ -157,7 +157,7 @@ class Form_itemsState extends State<Form_items> {
       final container = userContainers[index];
       return DropdownMenuItem(
         value: container.id,
-        child: Text(container.name),
+        child: Text(container.nameByUser),
       );
     });
 
@@ -283,9 +283,9 @@ class Form_itemsState extends State<Form_items> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                           items: [
-                            DropdownMenuItem(
+                            const DropdownMenuItem(
                               value: '123',
-                              child: Text('Contenedores'),
+                              child: Text('Contenedores', style: TextStyle(fontWeight: FontWeight.w500),),
                             ),
                             ...containers
                           ],

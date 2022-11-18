@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/helpers/alert.dart';
 import 'package:luxe/models/container.dart';
 import 'package:luxe/providers/container_profile_provider.dart';
+import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
 
 class listaContenedor extends StatefulWidget {
   listaContenedor({Key? key}) : super(key: key);
@@ -20,8 +21,7 @@ class _listaContenedorState extends State<listaContenedor> {
     final contenedorProvider = Provider.of<ContenedorProvider>(context);
     final List<dynamic> listaContenedores = contenedorProvider.listaContenedor;
 
-    final name = ModalRoute.of(context)!.settings.arguments;
-
+    final String name = ModalRoute.of(context)!.settings.arguments as String;
 
     print(contenedorProvider.listaContenedor);
     return Scaffold(
@@ -36,13 +36,11 @@ class _listaContenedorState extends State<listaContenedor> {
       ),
       body: Container(
         child: ListView.builder(
-        
           itemCount: listaContenedores.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
-              
                 margin: const EdgeInsets.only(top: 30, bottom: 50),
                 width: double.infinity,
                 height: 100,
@@ -53,11 +51,10 @@ class _listaContenedorState extends State<listaContenedor> {
                     Container(
                       color: Colors.blue,
                       child: ListTile(
-
-                        onTap  : (){
-                          escogerContenedor(name.toString()/* ,listaContenedores[index]['_id'] */,context);
-                          
-                        },
+                          onTap: () {
+                            escogerContenedor(
+                                name, listaContenedores[index]['_id'], context);
+                          },
                           title: Text(listaContenedores[index]['name']),
                           // subtitle: Text(listaContenedores[index]['rental']),
                           leading: const Icon(Icons.card_giftcard)),
@@ -123,36 +120,69 @@ class Title extends StatelessWidget {
   }
 }
 
-
-void escogerContenedor(String name, BuildContext context) async {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Center(child: CircularProgressIndicator());
-          });
+void escogerContenedor(String name, String id, BuildContext context) async {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return Center(child: CircularProgressIndicator());
+      });
   try {
-    var url = Uri.https(
-        'luxe-api-rest-production-e0e0.up.railway.app', '/api/containers/');
+    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
+        '/api/containers/assign/$id');
 
     var response = await http
-        .post(url,
+        .put(url,
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
               'x-token': Preferences.token,
-              
             },
             body: convert.jsonEncode(<String, dynamic>{
               "name_by_user": name,
-              
             }))
         .timeout(const Duration(seconds: 90));
 
-  print(response);
-  Navigator.pushReplacementNamed(context, 'pasarela_pago');
-    
+    await Provider.of<UserProfileProvider>(context, listen: false)
+        .getUserProfile(context);
+   showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.task_alt,
+                  color: Colors.greenAccent[400]!,
+                  size: 110,
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  'Has adquirido el contenedor, ya puedes registrar objetos',
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 16, color: Colors.grey.shade900),
+                )
+              ],
+            ),
+            actions: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                      child: const Text('Ok',
+                          style: TextStyle(fontSize: 18, color: Colors.indigo)),
+                      onPressed: () =>  Navigator.pushNamed(context, 'principal')),
+                ],
+              )
+            ],
+          ));
+   
   } catch (Error) {
     print(Error);
     print('http error');
   }
 }
-
