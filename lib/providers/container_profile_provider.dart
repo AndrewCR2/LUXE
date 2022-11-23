@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -18,23 +16,16 @@ class ContenedorProvider extends ChangeNotifier{
     //this.getOnContainerList();
   }
 
-
   buscarContainer(String plan) async{
-    var url = 
+    final url = 
         Uri.https(_baseUrl, '/api/containers/available',{'type': plan});
-    var response = await http
+    final response = await http
         .get(url)
         .timeout(const Duration(seconds: 90));
-    print('=======================================//////////');
 
-    print(response.body);
-    print('=======================================//////////');
-    //final ContainerResponse rsp = ContainerResponse.fromJson(response.body);
-    var jsonResponse =
+    final jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
     listaContenedor = jsonResponse['containers'];
-
-    //listaContenedor = rsp.contenedores;
 
     print(listaContenedor);
     

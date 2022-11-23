@@ -39,7 +39,7 @@ class _IngresarState extends State<Ingresar> {
         leading: IconButton(
           color: Colors.black,
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => {Navigator.of(context).pop()},
+          onPressed: () => {Navigator.pushNamed(context, 'inicio')},
         ),
       ),
       body: SingleChildScrollView(

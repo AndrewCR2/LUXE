@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:luxe/models/container.dart';
 
-
-
 class ContainerResponse {
     ContainerResponse({
         required this.total,

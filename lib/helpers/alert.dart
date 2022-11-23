@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-displayGoodAlert(
+displayCustomAlert(
     {required BuildContext context,
     required IconData icon,
     required String message,
-    required Color color}) {
+    required Color color,
+    String? redirectRoute,
+  }) {
   showDialog(
       barrierDismissible: false,
       context: context,
@@ -37,7 +39,9 @@ displayGoodAlert(
                   TextButton(
                       child: const Text('Ok',
                           style: TextStyle(fontSize: 18, color: Colors.indigo)),
-                      onPressed: () => Navigator.pop(context)),
+                      onPressed: () => {
+                          Navigator.pop(context)
+                      }),
                 ],
               )
             ],

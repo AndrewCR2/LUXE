@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/helpers/alert.dart';
-import 'package:luxe/models/container.dart';
 import 'package:luxe/providers/container_profile_provider.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -23,7 +22,6 @@ class _listaContenedorState extends State<listaContenedor> {
 
     final String name = ModalRoute.of(context)!.settings.arguments as String;
 
-    print(contenedorProvider.listaContenedor);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -35,48 +33,46 @@ class _listaContenedorState extends State<listaContenedor> {
         ),
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: listaContenedores.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                margin: const EdgeInsets.only(top: 30, bottom: 50),
-                width: double.infinity,
-                height: 100,
-                decoration: _cardBorders(),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Container(
-                      color: Colors.blue,
-                      child: ListTile(
-                          onTap: () {
-                            escogerContenedor(
-                                name, listaContenedores[index]['_id'], context);
-                          },
-                          title: Text(listaContenedores[index]['name']),
-                          // subtitle: Text(listaContenedores[index]['rental']),
-                          leading: const Icon(Icons.card_giftcard)),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const Title(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: listaContenedores.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: const Offset(-1, 5))
+                    ]),
+                    child: ListTile(
+                      iconColor: const Color.fromRGBO(0, 41, 107, 1),
+                      leading: const Icon(Icons.credit_card),
+                      title: Text(listaContenedores[index]['name']),
+                      subtitle: Text(listaContenedores[index]['_id']),
+                      onTap: () {
+                        escogerContenedor(
+                            name, listaContenedores[index]['_id'], context);
+                      },
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-BoxDecoration _cardBorders() => BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black12, offset: Offset(0, 27), blurRadius: 10),
-        ]);
 
 class Title extends StatelessWidget {
   //final UserProfileResponse userProfile;
@@ -86,33 +82,32 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+    return SizedBox(
+      width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hey!',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 14, 185, 28),
-                    fontSize: 25),
-              ),
-              Container(
-                height: 20,
-              ),
-              Text('Aquí tienes lista los ',
-                  textAlign: TextAlign.right,
-                  style:
-                      TextStyle(color: Colors.black, fontSize: 18, height: 2)),
-              Text(' contenedores disponibles.',
-                  textAlign: TextAlign.right,
-                  style:
-                      TextStyle(color: Colors.black, fontSize: 18, height: 2)),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Hey!',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 35, 26, 156),
+                      fontSize: 25),
+                ),
+                SizedBox(height: 10),
+                Text('Aquí tienes lista los  contenedores disponibles',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.black, fontSize: 18, height: 2)),
+                SizedBox(height: 20),
+              ],
+            ),
           ),
         ],
       ),
@@ -124,13 +119,13 @@ void escogerContenedor(String name, String id, BuildContext context) async {
   showDialog(
       context: context,
       builder: (context) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       });
   try {
-    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
+    final url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
         '/api/containers/assign/$id');
 
-    var response = await http
+    final response = await http
         .put(url,
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
@@ -143,7 +138,16 @@ void escogerContenedor(String name, String id, BuildContext context) async {
 
     await Provider.of<UserProfileProvider>(context, listen: false)
         .getUserProfile(context);
-   showDialog(
+
+    _alertSuccess(context);
+  } catch (Error) {
+    print(Error);
+    print('http error');
+  }
+}
+
+Future<dynamic> _alertSuccess(BuildContext context) {
+  return showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
@@ -153,9 +157,9 @@ void escogerContenedor(String name, String id, BuildContext context) async {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.task_alt,
-                  color: Colors.greenAccent[400]!,
+                  color: Color.fromARGB(255, 46, 227, 88),
                   size: 110,
                 ),
                 const SizedBox(height: 30),
@@ -175,14 +179,10 @@ void escogerContenedor(String name, String id, BuildContext context) async {
                   TextButton(
                       child: const Text('Ok',
                           style: TextStyle(fontSize: 18, color: Colors.indigo)),
-                      onPressed: () =>  Navigator.pushNamed(context, 'principal')),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, 'principal')),
                 ],
               )
             ],
           ));
-   
-  } catch (Error) {
-    print(Error);
-    print('http error');
-  }
 }

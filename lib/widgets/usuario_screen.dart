@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/providers/user_profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class UsuarioScreen extends StatefulWidget {
   const UsuarioScreen({Key? key}) : super(key: key);
@@ -12,6 +14,11 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   final double profileHeight = 144;
   @override
   Widget build(BuildContext context) {
+
+    final UserProfileProvider userProfileProvider = Provider.of<UserProfileProvider>(context);
+
+    final user = userProfileProvider.user!.user;
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -28,14 +35,14 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                   height: 8,
                 ),
                 Text(
-                  'Andrew',
+                  user.name,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 8,
                 ),
                 Text(
-                  'Centro de Salud "Buenos Aires de Villa"',
+                  'Luxe almacenes',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(

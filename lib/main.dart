@@ -30,7 +30,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ContenedorProvider(),
           lazy: false,
-          )
+        )
       ],
       child: const MyApp(),
     );
@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        color: Colors.white,
         debugShowCheckedModeBanner: false,
         title: 'Luxe',
         initialRoute: 'splash',

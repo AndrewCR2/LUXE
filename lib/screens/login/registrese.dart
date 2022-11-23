@@ -316,9 +316,6 @@ class _RegistroState extends State<Registro> {
                               borderRadius: BorderRadius.circular(7),
                             ))),
                         onPressed: () {
-                          print('======================');
-                          print('iniciando la petición');
-                          print('======================');
                           final bool isValid =
                               EmailValidator.validate(txtCorreo.text.trim());
 
@@ -327,7 +324,7 @@ class _RegistroState extends State<Registro> {
                                 const SnackBar(content: Text('Validando...')));
                               if (txtContra.text != txtConfir_Contra.text ||
                                   txtContra.text.length < 8) {
-                                return displayGoodAlert(
+                                return displayCustomAlert(
                                     context: context,
                                     icon: Icons.sentiment_dissatisfied,
                                     message: 'Verifique la contraseña',

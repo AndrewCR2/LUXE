@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:luxe/providers/user_profile_provider.dart';
+import 'package:luxe/screens/success_screen.dart';
 import 'dart:convert' as convert;
 
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -91,6 +92,11 @@ class _ElegirPlan extends State<ElegirPlan> {
 
 //Planes
 Widget MasPlanes(String imagen, String name, String subname, int precio) {
+  var textStyle = const TextStyle(
+      color: Color.fromRGBO(0, 41, 107, 1),
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Roboto-Italic');
   return Container(
     margin: EdgeInsets.only(right: 15),
     width: 140,
@@ -111,34 +117,22 @@ Widget MasPlanes(String imagen, String name, String subname, int precio) {
           ),
         ),
         Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: Column(
               children: <Widget>[
                 Text(
                   name,
-                  style: TextStyle(
-                      color: Color.fromRGBO(0, 41, 107, 1),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto-Italic'),
+                  style: textStyle,
                 ),
                 SizedBox(height: 10),
                 Text(
                   subname,
-                  style: TextStyle(
-                      color: Color.fromRGBO(0, 41, 107, 1),
-                      fontSize: 14,
-                      fontFamily: 'Roboto-Italic',
-                      fontWeight: FontWeight.w400),
+                  style: textStyle,
                 ),
                 SizedBox(height: 10),
                 Text(
                   '\$' + precio.toString(),
-                  style: TextStyle(
-                      color: Color.fromRGBO(0, 41, 107, 1),
-                      fontSize: 14,
-                      fontFamily: 'Roboto-Italic',
-                      fontWeight: FontWeight.w400),
+                  style: textStyle,
                 ),
               ],
             )),
@@ -148,11 +142,11 @@ Widget MasPlanes(String imagen, String name, String subname, int precio) {
 }
 
 void planes(String subname, int precio, BuildContext context) async {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Center(child: CircularProgressIndicator());
-          });
+  showDialog(
+      context: context,
+      builder: (context) {
+        return Center(child: CircularProgressIndicator());
+      });
   try {
     var url = Uri.https(
         'luxe-api-rest-production-e0e0.up.railway.app', '/api/account');
@@ -176,7 +170,8 @@ void planes(String subname, int precio, BuildContext context) async {
     if (jsonResponse['msg'] == 'create account') {
       await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context); // Guardamos el token
-      Navigator.pushReplacementNamed(context, 'principal');
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => SuccessScreen()));
     } else {
       print(response.body);
     }
