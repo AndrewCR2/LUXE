@@ -42,23 +42,27 @@ class CardItem extends StatelessWidget {
               fit: BoxFit.cover,
             )
           ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            Text(
-              objeto.name,
-              style: const TextStyle(fontSize: 18),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              Text(
+                objeto.name,
+                style: const TextStyle(fontSize: 18),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                objeto.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14, color: Colors.grey[899]),
+              ),
+              ]),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              objeto.description,
-              style: TextStyle(fontSize: 14, color: Colors.grey[899]),
-            ),
-            ]),
           )
         ],
       ),
