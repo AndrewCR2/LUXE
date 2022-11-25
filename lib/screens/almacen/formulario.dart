@@ -157,7 +157,7 @@ class Form_itemsState extends State<Form_items> {
       final container = userContainers[index];
       return DropdownMenuItem(
         value: container.id,
-        child: Text(container.name),
+        child: Text(container.nameByUser),
       );
     });
 
@@ -198,27 +198,7 @@ class Form_itemsState extends State<Form_items> {
 
                   //===================      NOMBRE     ===============================
                   TextFormField(
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ), // Outline Input Border
-                        labelText: "Nombre del Producto",
-                        labelStyle: GoogleFonts.urbanist(
-                          textStyle: const TextStyle(
-                            color: Color.fromRGBO(131, 145, 161, 1),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: const Color.fromRGBO(247, 248, 249, 1)),
+                    decoration: _inpuDecoration(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Por favor ingrese el nombre del producto';
@@ -231,27 +211,7 @@ class Form_itemsState extends State<Form_items> {
                   ),
                   //===================     DESCRIPCIÓN     ===============================
                   TextFormField(
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ), // Outline Input Border
-                        labelText: "Descripción del Producto",
-                        labelStyle: GoogleFonts.urbanist(
-                          textStyle: const TextStyle(
-                            color: Color.fromRGBO(131, 145, 161, 1),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: const Color.fromRGBO(247, 248, 249, 1)),
+                    decoration: _inpuDecoration(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Es necesario que describa su producto';
@@ -283,9 +243,9 @@ class Form_itemsState extends State<Form_items> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                           items: [
-                            DropdownMenuItem(
+                            const DropdownMenuItem(
                               value: '123',
-                              child: Text('Contenedores'),
+                              child: Text('Contenedores', style: TextStyle(fontWeight: FontWeight.w500),),
                             ),
                             ...containers
                           ],
@@ -331,7 +291,7 @@ class Form_itemsState extends State<Form_items> {
                           ),
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromRGBO(0, 41, 107, 1),
+                              const Color.fromRGBO(0, 41, 107, 1),
                             ),
                           ),
                         ),
@@ -371,7 +331,7 @@ class Form_itemsState extends State<Form_items> {
                         if (txtNombre.text == '' ||
                             txtDesc.text == '' ||
                             imagen == null) {
-                          return displayGoodAlert(
+                          return displayCustomAlert(
                               context: context,
                               icon: Icons.sentiment_dissatisfied,
                               message: 'Los campos son obligatorios',
@@ -379,7 +339,7 @@ class Form_itemsState extends State<Form_items> {
                         }
 
                         if (dropCurrentValue == '123') {
-                          return displayGoodAlert(
+                          return displayCustomAlert(
                               context: context,
                               icon: Icons.sentiment_dissatisfied,
                               message: 'Elige un contenedor',
@@ -426,7 +386,7 @@ class Form_itemsState extends State<Form_items> {
                                     listen: false)
                                 .getUserProfile(context);
 
-                            displayGoodAlert(
+                            displayCustomAlert(
                                 context: context,
                                 icon: Icons.task_alt,
                                 message: 'Se ha guardado correctamente',
@@ -434,7 +394,7 @@ class Form_itemsState extends State<Form_items> {
                           }
                         } catch (error) {
                           print(error);
-                          displayGoodAlert(
+                          displayCustomAlert(
                               context: context,
                               icon: Icons.highlight_off,
                               message: 'El registro ha fallado',
@@ -448,6 +408,30 @@ class Form_itemsState extends State<Form_items> {
         ),
       ),
     );
+  }
+
+  InputDecoration _inpuDecoration() {
+    return InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(232, 236, 244, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(5.5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(232, 236, 244, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(5.5),
+                      ), // Outline Input Border
+                      labelText: "Descripción del Producto",
+                      labelStyle: GoogleFonts.urbanist(
+                        textStyle: const TextStyle(
+                          color: Color.fromRGBO(131, 145, 161, 1),
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(247, 248, 249, 1));
   }
 }
 

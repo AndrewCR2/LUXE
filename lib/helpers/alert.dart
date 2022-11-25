@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-displayGoodAlert(
-    {required BuildContext context,
-    required IconData icon,
-    required String message,
-    required Color color}) {
+displayCustomAlert({
+  required BuildContext context,
+  required IconData icon,
+  required String message,
+  required Color color,
+  String? title,
+  String? redirectRoute,
+}) {
   showDialog(
       barrierDismissible: false,
       context: context,
@@ -20,7 +23,17 @@ displayGoodAlert(
                   color: color,
                   size: 110,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 15),
+                if(title != null)
+                  Text(
+                    title,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 20, color:color),
+
+                  ),
+                const SizedBox(height: 20),
                 Text(
                   message,
                   textAlign: TextAlign.center,
@@ -37,7 +50,7 @@ displayGoodAlert(
                   TextButton(
                       child: const Text('Ok',
                           style: TextStyle(fontSize: 18, color: Colors.indigo)),
-                      onPressed: () => Navigator.pop(context)),
+                      onPressed: () => {Navigator.pop(context)}),
                 ],
               )
             ],

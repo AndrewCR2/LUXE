@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:luxe/providers/container_profile_provider.dart';
 import 'package:luxe/widgets/menu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+
+import 'package:provider/provider.dart';
 
 class formContenedor extends StatefulWidget {
   formContenedor({Key? key}) : super(key: key);
@@ -13,26 +18,24 @@ class _formContenedorState extends State<formContenedor> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formkey = GlobalKey<FormState>();
   final txtNom_Con = TextEditingController();
-  final _precio = TextEditingController();
 
-  var _lista = [
-    'Pequeño  3x4m     S/80  x mes',
-    'Mediano  5x5m     S/150 x mes',
-    'Grande   8x5m     S/200 x mes'
-  ];
+  final _lista = ['Pequeño  3x4m', 'Mediano  5x5m', 'Grande   8x5m'];
   String _vista = 'Seleccione una opcion';
+  String name = '';
+  String plan = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      drawer: myMenu(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
           color: Colors.black,
-          icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () => {Navigator.of(context).pop()},
+          icon: Icon(Icons.menu),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
       ),
       body: SingleChildScrollView(
@@ -87,35 +90,35 @@ class _formContenedorState extends State<formContenedor> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 45,
                 ),
                 Container(
                   //margin: EdgeInsets.symmetric(horizontal: 10),
                   alignment: Alignment.center,
                   child: Text(
-                    'Elige el tamaño y tu plan',
+                    'Elige el tamaño de tu preferencia',
                     style: GoogleFonts.urbanist(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                       color: Color.fromARGB(255, 12, 50, 106),
                     )),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _selectTamano(),
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
-                Container(
-                  width: 250,
+                SizedBox(
+                  width: 350,
                   height: 45,
                   child: ElevatedButton(
                     child: Text(
-                      'Adquirir',
+                      'Buscar Contenedores',
                       style: GoogleFonts.urbanist(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                             color: Color.fromARGB(255, 10, 38, 159),
@@ -123,16 +126,38 @@ class _formContenedorState extends State<formContenedor> {
                       ),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(253, 197, 0, 1),
-                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.amber),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(7),
                         ))),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, 'pasarela_pago');
+                    onPressed: () async {
+                      if (_formkey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Guardando...')));
+                        name = txtNom_Con.text;
+                        if (_vista == 'Pequeño  3x4m') {
+                          plan = 'small';
+                        }
+                        if (_vista == 'Mediano  5x5m') {
+                          plan = 'medium';
+                        }
+                        if (_vista == 'Grande   8x5m') {
+                          plan = 'big';
+                        }
+
+                        final contenedorProvider =
+                            Provider.of<ContenedorProvider>(context,
+                                listen: false);
+                        await contenedorProvider.buscarContainer(plan);
+                        Navigator.pushReplacementNamed(
+                            context, 'lista_contenedores',
+                            arguments: name);
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Asigna un nombre...')));
                     },
                   ),
                 ),
@@ -146,28 +171,46 @@ class _formContenedorState extends State<formContenedor> {
 
   Container _selectTamano() {
     return Container(
-      //color: Colors.amber,
+      padding: const EdgeInsets.all(10),
       width: 300,
       height: 54,
-      padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-          color: Colors.amber, borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey)),
       child: DropdownButton(
-        iconEnabledColor: Colors.blue,
+        underline: Container(
+            decoration:
+                const BoxDecoration(border: Border(bottom: BorderSide.none))),
+        iconEnabledColor: const Color.fromARGB(255, 67, 69, 70),
         items: _lista.map((String a) {
           return DropdownMenuItem(value: a, child: Text(a));
         }).toList(),
         onChanged: (_value) => {
           setState(() {
             _vista = _value.toString();
+            //plan = _vista;
           })
         },
         hint: Text(_vista),
-        underline: Container(
-          height: 3,
-          color: Colors.blue,
-        ),
       ),
     );
+  }
+}
+
+void buscarContenedor(name, String plan, BuildContext context) async {
+  try {
+    final url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
+        '/api/containers/available', {'type': plan});
+
+    final response = await http.get(url).timeout(const Duration(seconds: 90));
+
+    final jsonResponse =
+        convert.jsonDecode(response.body) as Map<String, dynamic>;
+
+    print(response.body);
+    //Navigator.pushNamed(context,'lista_contenedores');
+  } catch (Error) {
+    print(Error);
+    print('http error');
   }
 }

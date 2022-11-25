@@ -39,7 +39,7 @@ class _IngresarState extends State<Ingresar> {
         leading: IconButton(
           color: Colors.black,
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => {Navigator.of(context).pop()},
+          onPressed: () => {Navigator.pushNamed(context, 'inicio')},
         ),
       ),
       body: SingleChildScrollView(
@@ -178,32 +178,32 @@ class _IngresarState extends State<Ingresar> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  const Center(
-                      child: Text(
-                    'O inicia sesion con',
-                    style: TextStyle(color: Colors.grey),
-                  )),
-                  const SizedBox(height: 15),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        User? user =
-                            await Authenticator.InitSign(context: context);
-                        print(user?.displayName);
-                      },
-                      child: Container(
-                        height: 45,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(9),
-                          image: const DecorationImage(
-                              image: AssetImage('assets/google.png'),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const Center(
+                  //     child: Text(
+                  //   'O inicia sesion con',
+                  //   style: TextStyle(color: Colors.grey),
+                  // )),
+                  // const SizedBox(height: 15),
+                  // Center(
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       User? user =
+                  //           await Authenticator.InitSign(context: context);
+                  //       print(user?.displayName);
+                  //     },
+                  //     child: Container(
+                  //       height: 45,
+                  //       width: 60,
+                  //       decoration: BoxDecoration(
+                  //         border: Border.all(color: Colors.grey),
+                  //         borderRadius: BorderRadius.circular(9),
+                  //         image: const DecorationImage(
+                  //             image: AssetImage('assets/google.png'),
+                  //             fit: BoxFit.cover),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +227,7 @@ class _IngresarState extends State<Ingresar> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, 'registrese');
+                          Navigator.pushNamed(context, 'registrese');
                         },
                       )
                     ],
@@ -270,13 +270,13 @@ void ingresar(email, pass, BuildContext context) async {
 
       await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
-      Navigator.pushReplacementNamed(context, 'principal');
+      Navigator.pushNamed(context, 'principal');
     } else if(jsonResponse['msg'] == 'No tienes cuenta'){
       print('=======================');
       print(jsonResponse['msg']);
       print('=======================');
       Preferences.token = jsonResponse['token']; // Guardamos el token
-      Navigator.pushReplacementNamed(context, 'Elegir_plan');
+      Navigator.pushNamed(context, 'Elegir_plan');
     }
     else {
       print('Usuario incorrecto');

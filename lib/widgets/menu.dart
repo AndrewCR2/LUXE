@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
-import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:luxe/widgets/usuario_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,8 +28,13 @@ class _myMenuState extends State<myMenu> {
     );
   }
 
+<<<<<<< HEAD
   Widget buildHeader(User user, BuildContext context) => Material(
         color: Color.fromRGBO(10, 37, 106, 1),
+=======
+  Widget buildHeader(User user ,BuildContext context) => Material(
+        color: const Color.fromRGBO(10, 37, 106, 1),
+>>>>>>> b724584b70c85130a3599702dceea872ccb8eddd
         child: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -43,16 +47,24 @@ class _myMenuState extends State<myMenu> {
             child: Column(
               children: [
                 Container(
+<<<<<<< HEAD
                   child: CircleAvatar(
                       radius: 52,
                       backgroundImage: AssetImage('assets/LUXE.png'),
                       backgroundColor: Colors.white),
+=======
+                  child: const CircleAvatar(
+                    radius: 52,
+                    backgroundImage: AssetImage('assets/LUXE.png'),
+                    backgroundColor: Color.fromRGBO(0, 217, 219, 1),
+                  ),
+>>>>>>> b724584b70c85130a3599702dceea872ccb8eddd
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.amber, width: 3.0),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Text(
@@ -123,7 +135,7 @@ class _myMenuState extends State<myMenu> {
                 Icons.exit_to_app,
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, 'ruta_ingresar');
+                Navigator.pushNamed(context, 'ruta_ingresar');
               },
             )
           ],

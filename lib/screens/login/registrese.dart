@@ -83,27 +83,7 @@ class _RegistroState extends State<Registro> {
                     height: 20,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ), // Outline Input Border
-                        labelText: "Nombre",
-                        labelStyle: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                            color: Color.fromRGBO(131, 145, 161, 1),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Color.fromRGBO(247, 248, 249, 1)),
+                    decoration: _inputDecoration("Nombre"),
                     controller: txtNombre,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -116,27 +96,7 @@ class _RegistroState extends State<Registro> {
                   ),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ), // Outline Input Border
-                        labelText: "Correo",
-                        labelStyle: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                            color: Color.fromRGBO(131, 145, 161, 1),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Color.fromRGBO(247, 248, 249, 1)),
+                    decoration: _inputDecoration("Correo"),
                     controller: txtCorreo,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -261,27 +221,7 @@ class _RegistroState extends State<Registro> {
                   ),
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color.fromRGBO(232, 236, 244, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(5.5),
-                        ), // Outline Input Border
-                        labelText: "Confirmar contraseña",
-                        labelStyle: GoogleFonts.urbanist(
-                          textStyle: TextStyle(
-                            color: Color.fromRGBO(131, 145, 161, 1),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Color.fromRGBO(247, 248, 249, 1)),
+                    decoration: _inputDecoration("Confirmar contraseña"),
                     controller: txtConfir_Contra,
                     obscureText: true,
                     validator: (value) {
@@ -316,39 +256,33 @@ class _RegistroState extends State<Registro> {
                               borderRadius: BorderRadius.circular(7),
                             ))),
                         onPressed: () {
-                          print('======================');
-                          print('iniciando la petición');
-                          print('======================');
                           final bool isValid =
                               EmailValidator.validate(txtCorreo.text.trim());
 
                           if (_formKey.currentState!.validate()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Validando...')));
-                              if (txtContra.text != txtConfir_Contra.text ||
-                                  txtContra.text.length < 8) {
-                                return displayGoodAlert(
-                                    context: context,
-                                    icon: Icons.sentiment_dissatisfied,
-                                    message: 'Verifique la contraseña',
-                                    color: Colors.yellow[700]!);
-                              }
+                            if (txtContra.text != txtConfir_Contra.text ||
+                                txtContra.text.length < 8) {
+                              return displayCustomAlert(
+                                  context: context,
+                                  icon: Icons.sentiment_dissatisfied,
+                                  message: 'Verifique la contraseña',
+                                  color: Colors.yellow[700]!);
+                            }
 
-                              if (isValid) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Correo validado')));
-                                name = txtNombre.text;
-                                email = txtCorreo.text;
-                                password = txtContra.text;
-                                registrar(name, email, password, context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Inicie Sesión')));
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content:
-                                            Text('Ingrese un correo valido')));
+                            if (isValid) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Validando correo')));
+                              name = txtNombre.text;
+                              email = txtCorreo.text;
+                              password = txtContra.text;
+                              registrar(name, email, password, context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('Ingrese un correo valido')));
                             }
                           }
                         }),
@@ -358,6 +292,30 @@ class _RegistroState extends State<Registro> {
         ),
       ),
     );
+  }
+
+  InputDecoration _inputDecoration(String labelText) {
+    return InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ), // Outline Input Border
+        labelText: labelText,
+        labelStyle: GoogleFonts.urbanist(
+          textStyle: TextStyle(
+            color: Color.fromRGBO(131, 145, 161, 1),
+          ),
+        ),
+        filled: true,
+        fillColor: Color.fromRGBO(247, 248, 249, 1));
   }
 }
 
@@ -384,8 +342,20 @@ void registrar(name, email, pass, BuildContext context) async {
         convert.jsonDecode(response.body) as Map<String, dynamic>;
 
     if (jsonResponse['msg'] == 'Te has registrado') {
+
       Preferences.token = jsonResponse['token']; // Guardamos el token
-      Navigator.pushReplacementNamed(context, 'Elegir_plan');
+      Navigator.pushNamed(context, 'Elegir_plan');
+
+    } else if (jsonResponse['errors'] != null) {
+      final msg = jsonResponse['errors'][0]['msg'];
+
+      displayCustomAlert(
+          context: context,
+          icon: Icons.close_sharp,
+          title: 'Error en el emal',
+          message: msg,
+          color: Colors.red
+          );
     }
   } catch (Error) {
     print(Error);

@@ -131,6 +131,8 @@ class _PrincipalCard extends StatelessWidget {
         Navigator.pushNamed(context, rutaScreen);
       },
       child: Container(
+        width: double.infinity,
+        height: 100,
         margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -146,13 +148,15 @@ class _PrincipalCard extends StatelessWidget {
                       image: AssetImage(pathImg), fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(30)),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                nameCard,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: const TextStyle(fontSize: 20, color: Colors.white),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  nameCard,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ),
             ),
           ],
