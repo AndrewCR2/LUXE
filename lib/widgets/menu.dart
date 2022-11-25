@@ -16,22 +16,20 @@ class myMenu extends StatefulWidget {
 class _myMenuState extends State<myMenu> {
   @override
   Widget build(BuildContext context) {
-
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
     return Drawer(
       child: SingleChildScrollView(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          
-          buildHeader(userProfileProvider.user!.user ,context),
+          buildHeader(userProfileProvider.user!.user, context),
           buildMenuItems(context),
         ],
       )),
     );
   }
 
-  Widget buildHeader(User user ,BuildContext context) => Material(
+  Widget buildHeader(User user, BuildContext context) => Material(
         color: Color.fromRGBO(10, 37, 106, 1),
         child: InkWell(
           onTap: () {
@@ -46,13 +44,12 @@ class _myMenuState extends State<myMenu> {
               children: [
                 Container(
                   child: CircleAvatar(
-                    radius: 52,
-                    backgroundImage: AssetImage('assets/LUXE.png'),
-                    backgroundColor: Color.fromRGBO(0, 217, 219, 1),
-                  ),
+                      radius: 52,
+                      backgroundImage: AssetImage('assets/LUXE.png'),
+                      backgroundColor: Colors.white),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3.0),
+                    border: Border.all(color: Colors.amber, width: 3.0),
                   ),
                 ),
                 SizedBox(
@@ -111,7 +108,7 @@ class _myMenuState extends State<myMenu> {
               leading: Icon(
                 Icons.bar_chart,
               ),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, 'estado_cuenta');
               },
             ),
