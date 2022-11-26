@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luxe/helpers/alert.dart';
+import 'package:luxe/config.dart';
 import 'package:luxe/providers/container_profile_provider.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -122,7 +122,7 @@ void escogerContenedor(String name, String id, BuildContext context) async {
         return const Center(child: CircularProgressIndicator());
       });
   try {
-    final url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
+    final url = Uri.https(ConfigLuxe.url,
         '/api/containers/assign/$id');
 
     final response = await http

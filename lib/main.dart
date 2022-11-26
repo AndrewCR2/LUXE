@@ -7,7 +7,7 @@ import 'package:luxe/screens/pasarela_pago.dart';
 import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
-import 'package:luxe/providers/user_profile_provider.dart';
+import 'package:luxe/providers/providers.dart';
 import 'package:luxe/screens/screens.dart';
 
 void main() async {
@@ -30,7 +30,11 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ContenedorProvider(),
           lazy: false,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ItemProvider(),
+          lazy: false,
+        ),
       ],
       child: const MyApp(),
     );
@@ -63,7 +67,16 @@ class MyApp extends StatelessWidget {
           'form_contenedor': (_) => formContenedor(),
           'pasarela_pago': (_) => pasarelaPago(),
           'estado_cuenta': (_) => const EstadoCuentaScreen(),
-          'lista_contenedores': (_) => listaContenedor()
-        });
+          'lista_contenedores': (_) => listaContenedor(),
+          'edit_item': (_) => EditItemScreen(),
+        },
+        theme: ThemeData.light().copyWith(
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            elevation: 0
+          )
+        )
+        );
+
   }
 }

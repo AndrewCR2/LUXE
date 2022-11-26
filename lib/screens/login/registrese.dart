@@ -4,6 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/config.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'dart:convert' as convert;
 
@@ -323,7 +324,7 @@ void registrar(name, email, pass, BuildContext context) async {
   // print(name + email + pass);
   try {
     var url =
-        Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/users');
+        Uri.https(ConfigLuxe.url, '/api/users');
     // Uri.https('luxe-api-rest-production.up.railway.app', '/api/users');
 
     var response = await http

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:luxe/config.dart';
 import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -351,12 +352,8 @@ class Form_itemsState extends State<Form_items> {
                         }
 
                         try {
-                          final url = Uri.https(
-                              'luxe-api-rest-production-e0e0.up.railway.app',
-                              '/api/items');
-                          // final url = Uri.http(
-                          //     'localhost:8080',
-                          //     '/api/items');
+                          final url = Uri.https( ConfigLuxe.url, '/api/items');
+                              
                           final headers = <String, String>{
                             'Content-Type': 'application/json; charset=UTF-8',
                             'x-token': Preferences.token
@@ -448,7 +445,7 @@ Future<void> subir_imagen(
     });
     await dio
         .putUri(
-            Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
+            Uri.https(ConfigLuxe.url,
                 '/api/uploads/items/' + id),
             data: formData)
         .then((value) {
