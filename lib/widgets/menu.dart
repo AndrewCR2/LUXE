@@ -30,7 +30,8 @@ class _myMenuState extends State<myMenu> {
     );
   }
 
-  Widget buildHeader(User user, BuildContext context) => Material(
+
+  Widget buildHeader(User user ,BuildContext context) => Material(
         color: const Color.fromRGBO(10, 37, 106, 1),
         child: InkWell(
           onTap: () {
@@ -51,7 +52,7 @@ class _myMenuState extends State<myMenu> {
                   ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3.0),
+                    border: Border.all(color: Colors.amber, width: 3.0),
                   ),
                 ),
                 const SizedBox(

@@ -85,8 +85,8 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   Widget bulidProfileImage() => Container(
         child: CircleAvatar(
           radius: profileHeight / 2,
-          backgroundColor: Color.fromRGBO(0, 217, 219, 1),
-          backgroundImage: AssetImage('assets/LUXE.png'),
+          backgroundColor: Colors.white,
+          backgroundImage: const AssetImage('assets/LUXE.png'),
         ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
