@@ -27,8 +27,8 @@ class _ItemsScreenState extends State<ItemsScreen> {
           title: Text('CRUD ITEMS'),
           backgroundColor: ConfigLuxe.colorBlue,
         ),
-        body: (items == null)
-        ? Center(child: CircularProgressIndicator(color: Colors.grey),)
+        body: (items.isEmpty)
+        ? const Center(child: CircularProgressIndicator(color: Colors.grey),)
         :
         Padding(
           padding: const EdgeInsets.all(20),
@@ -50,9 +50,9 @@ class _ItemsScreenState extends State<ItemsScreen> {
                           const Expanded(child: SizedBox()),
                           if (item.imgStore == "")
                             const Text(
-                              'Actualizar imagen',
+                              'Pendiente',
                               style:
-                                  TextStyle(color: Color.fromARGB(255, 59, 82, 60), fontSize: 18),
+                                  TextStyle(color: Color.fromARGB(255, 61, 148, 66), fontSize: 18),
                             ),
                           IconButton(
                               onPressed: () {

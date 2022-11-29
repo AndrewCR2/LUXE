@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:luxe/config.dart';
-import 'package:luxe/providers/container_profile_provider.dart';
+import 'package:luxe/providers/container_provider.dart';
 import 'package:luxe/widgets/menu.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 
 import 'package:provider/provider.dart';
 

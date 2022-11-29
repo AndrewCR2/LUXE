@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:luxe/config.dart';
 import 'package:luxe/models/item_response.dart';
 import 'package:http/http.dart' as http;

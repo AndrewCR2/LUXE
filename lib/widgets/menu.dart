@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/providers/Item_provider.dart';
+import 'package:luxe/providers/providers.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
+import 'package:luxe/screens/admin/containers_screen.dart';
 import 'package:luxe/screens/admin/items_screen.dart';
+import 'package:luxe/screens/admin/users_screen.dart';
 import 'package:luxe/widgets/usuario_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -154,7 +157,8 @@ class _AdminOptions extends StatelessWidget {
             Icons.person,
           ),
           onTap: () {
-            Navigator.pushNamed(context, 'principal');
+            Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => UsersScreen()));
           },
         ),
         ListTile(
@@ -167,7 +171,10 @@ class _AdminOptions extends StatelessWidget {
             Icons.content_paste_sharp
           ),
           onTap: () {
-            Navigator.pushNamed(context, 'principal');
+            Provider.of<ContenedorProvider>(context, listen: false).getContainers();
+
+            Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => ContainesScreen()));
           },
         ),
         ListTile(
