@@ -14,16 +14,8 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   final double profileHeight = 144;
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
     userProfileProvider.user;
-=======
-
-    final UserProfileProvider userProfileProvider = Provider.of<UserProfileProvider>(context);
-
-    final user = userProfileProvider.user!.user;
-
->>>>>>> b724584b70c85130a3599702dceea872ccb8eddd
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -40,22 +32,14 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                   height: 8,
                 ),
                 Text(
-<<<<<<< HEAD
                   'a',
-=======
-                  user.name,
->>>>>>> b724584b70c85130a3599702dceea872ccb8eddd
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 8,
                 ),
                 Text(
-<<<<<<< HEAD
                   'Contenedor"',
-=======
-                  'Luxe almacenes',
->>>>>>> b724584b70c85130a3599702dceea872ccb8eddd
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(
