@@ -1,7 +1,10 @@
 
 //admin
+export 'package:luxe/screens/admin/containers_screen.dart';
 export 'package:luxe/screens/admin/edit_item_screen.dart';
-export 'package:luxe/screens/contenedores/crear_containers.dart';
+export 'package:luxe/screens/admin/crear_containers.dart';
+
+
 export 'package:luxe/screens/contenedores/form_contenedores.dart';
 export 'package:luxe/screens/contenedores/lista_contenedores.dart';
 export 'package:luxe/screens/estado_cuenta_screen.dart';

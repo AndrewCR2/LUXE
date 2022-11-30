@@ -71,6 +71,7 @@ class _ContainesScreenState extends State<ContainesScreen> {
         child: const Icon(Icons.add),
         backgroundColor: const Color(0xffFDC500),
         onPressed: () {
+          Navigator.pushNamed(context, 'crear_container');
         },
       ),
         );

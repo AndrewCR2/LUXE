@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
           'estado_cuenta': (_) => const EstadoCuentaScreen(),
           'lista_contenedores': (_) => listaContenedor(),
           'edit_item': (_) => EditItemScreen(),
-          'crear_container': (_)=> CredContainer()
+          'crear_container': (_)=> CreateContainer(),
+          'containers_screen': (_)=> ContainesScreen()
         },
         theme: ThemeData.light().copyWith(
           appBarTheme: const AppBarTheme(

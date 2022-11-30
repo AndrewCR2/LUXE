@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/models/item_response.dart';
-import 'package:luxe/screens/admin/edit_item_screen.dart';
-// import 'package:luxe/models/item_response.dart';
 
 displayCustomAlert({
   required BuildContext context,
@@ -52,7 +50,12 @@ displayCustomAlert({
                   TextButton(
                       child: const Text('Ok',
                           style: TextStyle(fontSize: 18, color: Colors.indigo)),
-                      onPressed: () => {Navigator.pop(context)}),
+                      onPressed: () => {
+                            if (redirectRoute == null)
+                              Navigator.pop(context)
+                            else
+                              Navigator.pushNamed(context, redirectRoute)
+                          }),
                 ],
               )
             ],

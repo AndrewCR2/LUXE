@@ -20,7 +20,6 @@ class ContenedorProvider extends ChangeNotifier {
     final response = await http.get(url);
     final ContenedorResponse listResponse = ContenedorResponse.fromJson(response.body);
     listaContenedores = listResponse.containers;
-    print(listaContenedores[0].name);
     notifyListeners();
   }
 
