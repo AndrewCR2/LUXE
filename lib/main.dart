@@ -63,9 +63,10 @@ class MyApp extends StatelessWidget {
           'pasarela_pago': (_) => pasarelaPago(),
           'estado_cuenta': (_) => const EstadoCuentaScreen(),
           'lista_contenedores': (_) => listaContenedor(),
-          'edit_item': (_) => EditItemScreen(),
+          'updateImg_item': (_)=> const ActualizarImgItem(),
           'crear_container': (_)=> CreateContainer(),
-          'containers_screen': (_)=> ContainesScreen()
+          'containers_screen': (_)=> ContainesScreen(),
+          'items_screen': (_)=> const ItemsScreen(),
         },
         theme: ThemeData.light().copyWith(
           appBarTheme: const AppBarTheme(
