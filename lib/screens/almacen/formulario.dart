@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'package:luxe/config.dart';
 import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -245,7 +246,10 @@ class Form_itemsState extends State<Form_items> {
                           items: [
                             const DropdownMenuItem(
                               value: '123',
-                              child: Text('Contenedores', style: TextStyle(fontWeight: FontWeight.w500),),
+                              child: Text(
+                                'Contenedores',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
                             ),
                             ...containers
                           ],
@@ -351,12 +355,8 @@ class Form_itemsState extends State<Form_items> {
                         }
 
                         try {
-                          final url = Uri.https(
-                              'luxe-api-rest-production-e0e0.up.railway.app',
-                              '/api/items');
-                          // final url = Uri.http(
-                          //     'localhost:8080',
-                          //     '/api/items');
+                          final url = Uri.https(ConfigLuxe.url, '/api/items');
+
                           final headers = <String, String>{
                             'Content-Type': 'application/json; charset=UTF-8',
                             'x-token': Preferences.token
@@ -412,26 +412,26 @@ class Form_itemsState extends State<Form_items> {
 
   InputDecoration _inpuDecoration() {
     return InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(232, 236, 244, 1),
-                        ),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(232, 236, 244, 1),
-                        ),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ), // Outline Input Border
-                      labelText: "Descripción del Producto",
-                      labelStyle: GoogleFonts.urbanist(
-                        textStyle: const TextStyle(
-                          color: Color.fromRGBO(131, 145, 161, 1),
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromRGBO(247, 248, 249, 1));
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ), // Outline Input Border
+        labelText: "Descripción del Producto",
+        labelStyle: GoogleFonts.urbanist(
+          textStyle: const TextStyle(
+            color: Color.fromRGBO(131, 145, 161, 1),
+          ),
+        ),
+        filled: true,
+        fillColor: const Color.fromRGBO(247, 248, 249, 1));
   }
 }
 
@@ -447,9 +447,7 @@ Future<void> subir_imagen(
       'file': await MultipartFile.fromFile(imagen.path, filename: filename)
     });
     await dio
-        .putUri(
-            Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
-                '/api/uploads/items/' + id),
+        .putUri(Uri.https(ConfigLuxe.url, '/api/uploads/items/' + id),
             data: formData)
         .then((value) {
       print(value);

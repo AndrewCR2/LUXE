@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:luxe/config.dart';
 import 'package:luxe/providers/container_profile_provider.dart';
 import 'package:luxe/widgets/menu.dart';
 import 'package:http/http.dart' as http;
@@ -194,23 +195,5 @@ class _formContenedorState extends State<formContenedor> {
         hint: Text(_vista),
       ),
     );
-  }
-}
-
-void buscarContenedor(name, String plan, BuildContext context) async {
-  try {
-    final url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
-        '/api/containers/available', {'type': plan});
-
-    final response = await http.get(url).timeout(const Duration(seconds: 90));
-
-    final jsonResponse =
-        convert.jsonDecode(response.body) as Map<String, dynamic>;
-
-    print(response.body);
-    //Navigator.pushNamed(context,'lista_contenedores');
-  } catch (Error) {
-    print(Error);
-    print('http error');
   }
 }

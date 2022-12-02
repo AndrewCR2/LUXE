@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/models/user_profile_response.dart';
+import 'package:luxe/providers/Item_provider.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
+import 'package:luxe/screens/admin/items_screen.dart';
 import 'package:luxe/widgets/usuario_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +24,7 @@ class _myMenuState extends State<myMenu> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           buildHeader(userProfileProvider.user!.user, context),
-          buildMenuItems(context),
+          buildMenuItems(userProfileProvider.user!.user, context),
         ],
       )),
     );
@@ -78,7 +80,7 @@ class _myMenuState extends State<myMenu> {
           ),
         ),
       );
-  Widget buildMenuItems(BuildContext context) => Container(
+  Widget buildMenuItems(User user, BuildContext context) => Container(
         padding: EdgeInsets.all(10),
         child: Wrap(
           children: [
@@ -111,15 +113,21 @@ class _myMenuState extends State<myMenu> {
                 Navigator.pushNamed(context, 'estado_cuenta');
               },
             ),
+            if (user.role == 'ADMIN_ROLE')
+              Column(
+                children: [_AdminOptions()],
+              ),
             Divider(),
             ListTile(
-              title: const Text('Cerrar Sesión',
+              title: Text('Cerrar Sesión',
                   style: TextStyle(
+                    color: Colors.red[800],
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Roboto-Italic',
                   )),
-              leading: const Icon(
+              leading: Icon(
                 Icons.exit_to_app,
+                color: Colors.red[800],
               ),
               onTap: () {
                 Navigator.pushNamed(context, 'ruta_ingresar');
@@ -128,4 +136,51 @@ class _myMenuState extends State<myMenu> {
           ],
         ),
       );
+}
+
+class _AdminOptions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          title: const Text('Crud users',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto-Italic',
+              )),
+          leading: const Icon(
+            Icons.person,
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, 'principal');
+          },
+        ),
+        ListTile(
+          title: const Text('Crud containers',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto-Italic',
+              )),
+          leading: const Icon(Icons.content_paste_sharp),
+          onTap: () {
+            Navigator.pushNamed(context, 'principal');
+          },
+        ),
+        ListTile(
+          title: const Text('Crud items',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto-Italic',
+              )),
+          leading: const Icon(Icons.propane_tank_rounded),
+          onTap: () {
+            Provider.of<ItemProvider>(context, listen: false).getItems();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => ItemsScreen()));
+          },
+        ),
+      ],
+    );
+  }
 }

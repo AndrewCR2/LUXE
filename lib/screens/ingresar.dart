@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/config.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/screens/go_sign/google_sign.dart';
 import 'dart:convert' as convert;
@@ -242,10 +243,7 @@ class _IngresarState extends State<Ingresar> {
 
 void ingresar(email, pass, BuildContext context) async {
   try {
-    var url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
-    // var url =
-        // Uri.https('luxe-api-rest-production-e0e0.up.railway.app', '/api/auth');
-    // var url = Uri.http('localhost:8080', '/api/auth');
+    var url = Uri.https(ConfigLuxe.url , '/api/auth');
 
     var response = await http
         .post(url,
@@ -255,6 +253,9 @@ void ingresar(email, pass, BuildContext context) async {
             body: convert
                 .jsonEncode(<String, String>{'email': email, 'password': pass}))
         .timeout(const Duration(seconds: 90));
+      print('=======================');
+      print(response.body);
+      print('=======================');
 
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
@@ -270,6 +271,7 @@ void ingresar(email, pass, BuildContext context) async {
 
       await Provider.of<UserProfileProvider>(context, listen: false)
           .getUserProfile(context);
+      
       Navigator.pushNamed(context, 'principal');
     } else if(jsonResponse['msg'] == 'No tienes cuenta'){
       print('=======================');

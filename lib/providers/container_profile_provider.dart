@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-
-
+import 'package:luxe/config.dart';
 
 class ContenedorProvider extends ChangeNotifier{
   
-  final String _baseUrl = "luxe-api-rest-production-e0e0.up.railway.app";
+  final String _baseUrl = ConfigLuxe.url;
 
   List<dynamic> listaContenedor =[];
 

@@ -39,7 +39,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                   height: 8,
                 ),
                 Text(
-                  'Contenedor"',
+                  'Contenedor',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(
@@ -82,8 +82,8 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   Widget bulidProfileImage() => Container(
         child: CircleAvatar(
           radius: profileHeight / 2,
-          backgroundColor: Colors.grey,
-          backgroundImage: AssetImage('assets/LUXE.png'),
+          backgroundColor: Colors.white,
+          backgroundImage: const AssetImage('assets/LUXE.png'),
         ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,

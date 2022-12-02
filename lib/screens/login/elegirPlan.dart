@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:luxe/config.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/screens/success_screen.dart';
 import 'dart:convert' as convert;
@@ -145,11 +146,10 @@ void planes(String subname, int precio, BuildContext context) async {
   showDialog(
       context: context,
       builder: (context) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       });
   try {
-    var url = Uri.https(
-        'luxe-api-rest-production-e0e0.up.railway.app', '/api/account');
+    var url = Uri.https( ConfigLuxe.url, '/api/account');
 
     var response = await http
         .post(url,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luxe/helpers/alert.dart';
+import 'package:luxe/config.dart';
 import 'package:luxe/providers/container_profile_provider.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -44,15 +44,15 @@ class _listaContenedorState extends State<listaContenedor> {
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 10,
-                          offset: const Offset(-1, 5))
-                    ]),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: const Offset(-1, 5))
+                        ]),
                     child: ListTile(
                       iconColor: const Color.fromRGBO(0, 41, 107, 1),
                       leading: const Icon(Icons.credit_card),
@@ -122,8 +122,7 @@ void escogerContenedor(String name, String id, BuildContext context) async {
         return const Center(child: CircularProgressIndicator());
       });
   try {
-    final url = Uri.https('luxe-api-rest-production-e0e0.up.railway.app',
-        '/api/containers/assign/$id');
+    final url = Uri.https(ConfigLuxe.url, '/api/containers/assign/$id');
 
     final response = await http
         .put(url,

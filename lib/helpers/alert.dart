@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/models/item_response.dart';
+import 'package:luxe/screens/admin/edit_item_screen.dart';
+// import 'package:luxe/models/item_response.dart';
 
 displayCustomAlert({
   required BuildContext context,
@@ -24,14 +27,13 @@ displayCustomAlert({
                   size: 110,
                 ),
                 const SizedBox(height: 15),
-                if(title != null)
+                if (title != null)
                   Text(
                     title,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 20, color:color),
-
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 20, color: color),
                   ),
                 const SizedBox(height: 20),
                 Text(
@@ -54,5 +56,79 @@ displayCustomAlert({
                 ],
               )
             ],
+          ));
+}
+
+optionsAlert({required Item item, required BuildContext context}) {
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusDirectional.circular(10)),
+            contentPadding: EdgeInsets.all(0),
+            // title: const Text('Options'),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'edit_item',
+                          arguments: item);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 25),
+                      child: Row(
+                        children: const [
+                          Expanded(child: Text('Editar')),
+                          Icon(Icons.edit)
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 25),
+                      child: Row(
+                        children: const [
+                          Expanded(child: Text('Eliminar por estado')),
+                          Icon(Icons.delete_outline_rounded)
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 25),
+                      child: Row(
+                        children: const [
+                          Expanded(child: Text('Eliminar definitivamente')),
+                          Icon(Icons.delete_forever_outlined)
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 25),
+                      color: Colors.red[600],
+                      child: const Center(
+                        child: Text(
+                          'Cancelar',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ));
 }
