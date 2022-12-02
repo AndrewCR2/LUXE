@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luxe/screens/contenedores/form_contenedores.dart';
-import 'package:luxe/screens/contenedores/lista_contenedores.dart';
-import 'package:luxe/screens/login/elegirPlan.dart';
-import 'package:luxe/screens/pasarela_pago.dart';
 import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -67,7 +63,10 @@ class MyApp extends StatelessWidget {
           'pasarela_pago': (_) => pasarelaPago(),
           'estado_cuenta': (_) => const EstadoCuentaScreen(),
           'lista_contenedores': (_) => listaContenedor(),
-          'edit_item': (_) => EditItemScreen(),
+          'updateImg_item': (_)=> const ActualizarImgItem(),
+          'crear_container': (_)=> CreateContainer(),
+          'containers_screen': (_)=> ContainesScreen(),
+          'items_screen': (_)=> const ItemsScreen(),
         },
         theme: ThemeData.light().copyWith(
           appBarTheme: const AppBarTheme(

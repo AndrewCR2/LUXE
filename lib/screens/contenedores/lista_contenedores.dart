@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luxe/config.dart';
-import 'package:luxe/providers/container_profile_provider.dart';
+import 'package:luxe/providers/container_provider.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ class _listaContenedorState extends State<listaContenedor> {
   @override
   Widget build(BuildContext context) {
     final contenedorProvider = Provider.of<ContenedorProvider>(context);
-    final List<dynamic> listaContenedores = contenedorProvider.listaContenedor;
+    final List<dynamic> listaContenedores = contenedorProvider.listaContenedorPorTipo;
 
     final String name = ModalRoute.of(context)!.settings.arguments as String;
 

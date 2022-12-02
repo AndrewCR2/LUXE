@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:luxe/config.dart';
+import 'package:luxe/helpers/subir_archivo.dart';
 import 'package:luxe/models/user_profile_response.dart';
 import 'package:luxe/providers/user_profile_provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -381,7 +382,10 @@ class Form_itemsState extends State<Form_items> {
                             final idNewItem = jsonResponse['_id'];
 
                             await subir_imagen(
-                                dio: dio, imagen: imagen!, id: idNewItem);
+                                dio: dio,
+                                imagen: imagen!,
+                                id: idNewItem,
+                                query: 'client');
                             Provider.of<UserProfileProvider>(context,
                                     listen: false)
                                 .getUserProfile(context);
@@ -432,27 +436,5 @@ class Form_itemsState extends State<Form_items> {
         ),
         filled: true,
         fillColor: const Color.fromRGBO(247, 248, 249, 1));
-  }
-}
-
-Future<void> subir_imagen(
-    {required Dio dio, required File imagen, required String id}) async {
-  try {
-    String filename = imagen.path.split('/').last;
-    print('========================');
-    print(filename);
-    print('========================');
-
-    FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(imagen.path, filename: filename)
-    });
-    await dio
-        .putUri(Uri.https(ConfigLuxe.url, '/api/uploads/items/' + id),
-            data: formData)
-        .then((value) {
-      print(value);
-    });
-  } catch (e) {
-    print(e.toString());
   }
 }
