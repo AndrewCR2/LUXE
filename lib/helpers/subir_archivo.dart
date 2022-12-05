@@ -3,7 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:luxe/config.dart';
 
 Future<void> subir_imagen(
-    {required Dio dio, required File imagen, required String id, required String query}) async {
+    {required Dio dio,
+    required File imagen,
+    required String id,
+    required String query}) async {
   try {
     String filename = imagen.path.split('/').last;
     print('========================');
@@ -15,8 +18,7 @@ Future<void> subir_imagen(
     });
     await dio
         .putUri(
-            Uri.https(ConfigLuxe.url,
-                '/api/uploads/items/$id',{'img':query}),
+            Uri.https(ConfigLuxe.url, '/api/uploads/items/$id', {'img': query}),
             data: formData)
         .then((value) {
       print(value);

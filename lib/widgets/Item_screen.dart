@@ -1,5 +1,7 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:luxe/models/user_profile_response.dart';
+import 'package:luxe/widgets/datItems.dart';
 
 class Item_Screen extends StatelessWidget {
   final ItemElement objeto;
@@ -7,6 +9,8 @@ class Item_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var images1 = [objeto.imgClient, objeto.imgStore];
+    print(images1);
     return Scaffold(
       appBar: AppBar(
         title: Text("Item"),
@@ -36,15 +40,52 @@ class Item_Screen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    alignment: Alignment.center,
-                    child: Image.network(
-                      objeto.imgClient,
-                      fit: BoxFit.cover,
-                      height: MediaQuery.of(context).size.height * 0.4,
+                    height: 400,
+                    child: Swiper(
+                      itemCount: 2,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 300,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  child: (objeto.imgClient != '' ||
+                                          objeto.imgStore != '')
+                                      ? Image.network(
+                                          images1[index],
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return FadeInImage(
+                                                placeholder: AssetImage(
+                                                    'assets/Loading_icon.gif'),
+                                                image: AssetImage(
+                                                    'assets/no-image.jpg'));
+                                          },
+                                        )
+                                      : const Image(
+                                          image:
+                                              AssetImage('assets/no-image.jpg'),
+                                          height: 120,
+                                          width: 140,
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      scale: 0.9,
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   Row(
                     children: [
@@ -59,22 +100,7 @@ class Item_Screen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 25,
-                  ),
-                  Text("Descripción",
-                      style: TextStyle(fontFamily: 'Roboto-Italic')),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    objeto.description,
-                    style: TextStyle(fontFamily: 'Roboto-Italic'),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 35,
+                    height: 15,
                   ),
                   Container(
                     width: double.infinity,
@@ -101,9 +127,6 @@ class Item_Screen extends StatelessWidget {
                             //   fit: BoxFit.cover,
                             //   color: Color.fromRGBO(0, 217, 219, 1),
                             // ),
-                            SizedBox(
-                              width: 7,
-                            ),
                             Text(
                               "Descripción:",
                               style: TextStyle(

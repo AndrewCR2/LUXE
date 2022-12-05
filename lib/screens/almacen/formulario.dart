@@ -394,6 +394,7 @@ class Form_itemsState extends State<Form_items> {
                                 context: context,
                                 icon: Icons.task_alt,
                                 message: 'Se ha guardado correctamente',
+                                redirectRoute: 'almacen',
                                 color: Colors.greenAccent[400]!);
                           }
                         } catch (error) {
