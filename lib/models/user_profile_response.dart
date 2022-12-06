@@ -21,7 +21,7 @@ class UserProfileResponse {
 
     String toJson() => json.encode(toMap());
 
-    factory UserProfileResponse.fromMap(Map<String, dynamic> json) => UserProfileResponse(
+    factory UserProfileResponse.fromMap(Map<dynamic, dynamic> json) => UserProfileResponse(
         user: User.fromMap(json["user"]),
         account: Account.fromMap(json["account"]),
         container: UserProfileResponseContainer.fromMap(json["container"]),
@@ -193,7 +193,7 @@ class ItemElement {
     String imgClient;
     String imgStore;
     String user;
-    String container;
+    ItemContainer container;
 
     factory ItemElement.fromJson(String str) => ItemElement.fromMap(json.decode(str));
 
@@ -206,7 +206,7 @@ class ItemElement {
         imgClient: json["img_client"],
         imgStore: json["img_store"],
         user: json["user"],
-        container: json["container"],
+        container: ItemContainer.fromMap(json["container"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -216,10 +216,37 @@ class ItemElement {
         "img_client": imgClient,
         "img_store": imgStore,
         "user": user,
-        "container": container,
+        "container": container.toMap(),
     };
 }
 
+class ItemContainer {
+    ItemContainer({
+        required this.id,
+        required this.name,
+        required this.nameByUser,
+    });
+
+    String id;
+    String name;
+    String nameByUser;
+
+    factory ItemContainer.fromJson(String str) => ItemContainer.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory ItemContainer.fromMap(Map<String, dynamic> json) => ItemContainer(
+        id: json["_id"],
+        name: json["name"],
+        nameByUser: json["name_by_user"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "_id": id,
+        "name": name,
+        "name_by_user": nameByUser,
+    };
+}
 class User {
     User({
         required this.id,

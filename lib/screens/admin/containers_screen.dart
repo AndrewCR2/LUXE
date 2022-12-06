@@ -30,8 +30,8 @@ class _ContainesScreenState extends State<ContainesScreen> {
           ? const Center(
               child: CircularProgressIndicator(color: Colors.grey),
             )
-          : Padding(
-              padding: const EdgeInsets.all(20),
+          : Container(
+              padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
                   Expanded(
@@ -45,8 +45,9 @@ class _ContainesScreenState extends State<ContainesScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
                               color: (container.assignUser == null)
-                                    ? Color.fromARGB(255, 221, 240, 214)
-                                    : Colors.white,
+                                  ? const Color.fromARGB(255, 213, 250, 199)
+                                  : Colors.white,
+                              border: Border.all(color: Colors.grey, width: 1),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
@@ -58,9 +59,11 @@ class _ContainesScreenState extends State<ContainesScreen> {
                           child: ListTile(
                             iconColor: const Color.fromRGBO(0, 41, 107, 1),
                             leading: const Icon(Icons.credit_card),
-                            title: Text(container.name),
-                            subtitle: Text(container.id),
-                            trailing: Container(
+                            title: Text(container.name, style: const TextStyle(fontWeight: FontWeight.w500)),
+                            subtitle: Text(container.assignUser != null
+                                ? container.assignUser!.email
+                                : '', overflow: TextOverflow.ellipsis ,style: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 58, 58, 58))),
+                            trailing: SizedBox(
                               width: 100,
                               height: 50,
                               child: Row(
@@ -75,10 +78,6 @@ class _ContainesScreenState extends State<ContainesScreen> {
                                           optionsAlertContainer(
                                               contenedor: container,
                                               context: context);
-                                          containers = Provider.of<ContenedorProvider>(
-                                                  context,
-                                                  listen: false)
-                                              .listaContenedores;
                                         });
                                       },
                                       icon:

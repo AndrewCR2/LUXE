@@ -162,7 +162,7 @@ optionsAlertContainer(
       builder: (context) => AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadiusDirectional.circular(10)),
-            contentPadding: EdgeInsets.all(0),
+            contentPadding: const EdgeInsets.all(0),
             // title: const Text('Options'),
             content: SingleChildScrollView(
               child: Column(
@@ -204,8 +204,6 @@ optionsAlertContainer(
                       final response = await http.delete(url, headers: {
                         'x-token': Preferences.token
                       }).timeout(const Duration(seconds: 90));
-
-                      print(response.body);
 
                       Navigator.pushNamed(context, 'principal');
                       // Navigator.pop(context);
