@@ -380,7 +380,13 @@ class Form_itemsState extends State<Form_items> {
                           if (jsonResponse['name'] != null) {
                             print('El id del item es: ' + jsonResponse['_id']);
                             final idNewItem = jsonResponse['_id'];
-
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                });
                             await subir_imagen(
                                 dio: dio,
                                 imagen: imagen!,

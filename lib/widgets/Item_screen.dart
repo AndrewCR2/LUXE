@@ -17,7 +17,7 @@ class Item_Screen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => {Navigator.of(context).pop()},
         ),
         actions: [
@@ -51,7 +51,7 @@ class Item_Screen extends StatelessWidget {
                               Container(
                                 height: 300,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10)),
                                   child: (objeto.imgClient != '' ||
@@ -61,7 +61,7 @@ class Item_Screen extends StatelessWidget {
                                           fit: BoxFit.cover,
                                           errorBuilder:
                                               (context, error, stackTrace) {
-                                            return FadeInImage(
+                                            return const FadeInImage(
                                                 placeholder: AssetImage(
                                                     'assets/Loading_icon.gif'),
                                                 image: AssetImage(
@@ -87,25 +87,18 @@ class Item_Screen extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        objeto.name,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto-Italic'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
+                  Text(
+                    objeto.name,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Roboto-Italic'),
                   ),
                   Container(
                     width: double.infinity,
                     height: 220,
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
@@ -119,29 +112,54 @@ class Item_Screen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            // Image.asset(
-                            //   'assets/punto.png',
-                            //   width: 8,
-                            //   fit: BoxFit.cover,
-                            //   color: Color.fromRGBO(0, 217, 219, 1),
-                            // ),
-                            Text(
-                              "Descripción:",
-                              style: TextStyle(
-                                  fontFamily: 'Roboto-Italic',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                        Text(
+                          "Descripción:",
+                          style: _subtitleStyle(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           objeto.description,
-                          style: TextStyle(fontFamily: 'Roboto-Italic'),
+                          style: _textStyle(),
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text("Contenedor:", style: _subtitleStyle()),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const Text(
+                              'Nombre: ',
+                              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              objeto.container.name,
+                              style:_textStyle(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Nombre asignado: ',
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: Text(
+                                objeto.container.nameByUser,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style:_textStyle()
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -152,5 +170,12 @@ class Item_Screen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextStyle _textStyle() => TextStyle(fontSize: 15, fontFamily: 'Roboto-Italic');
+
+  TextStyle _subtitleStyle() {
+    return TextStyle(
+        fontSize: 20, fontFamily: 'Roboto-Italic', fontWeight: FontWeight.bold);
   }
 }

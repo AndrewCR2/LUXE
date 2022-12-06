@@ -23,7 +23,9 @@ class CardItem extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         height: 120,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: (objeto.imgStore == '')
+                ? const Color.fromARGB(255, 222, 248, 223)
+                : Colors.white,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -39,21 +41,9 @@ class CardItem extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     topLeft: Radius.circular(15)),
-                child: (objeto.imgClient != '')
-                    ? FadeInImage(
-                        placeholder:
-                            const AssetImage('assets/Loading_icon.gif'),
-                        image: NetworkImage(objeto.imgClient),
-                        height: 120,
-                        width: 140,
-                        fit: BoxFit.cover,
-                      )
-                    : const Image(
-                        image: AssetImage('assets/no-image.jpg'),
-                        height: 120,
-                        width: 140,
-                        fit: BoxFit.cover,
-                      )),
+                child: _ShowImgItem(
+                    urlImgClient: objeto.imgClient,
+                    urlImgStore: objeto.imgStore)),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(15),
@@ -80,5 +70,39 @@ class CardItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _ShowImgItem extends StatelessWidget {
+  final String urlImgClient;
+  final String urlImgStore;
+  const _ShowImgItem(
+      {Key? key, required this.urlImgClient, required this.urlImgStore})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return (urlImgStore != '')
+        ? FadeInImage(
+            placeholder: const AssetImage('assets/Loading_icon.gif'),
+            image: NetworkImage(urlImgStore),
+            height: 120,
+            width: 140,
+            fit: BoxFit.cover,
+          )
+        : (urlImgClient != '')
+            ? FadeInImage(
+                placeholder: const AssetImage('assets/Loading_icon.gif'),
+                image: NetworkImage(urlImgClient),
+                height: 120,
+                width: 140,
+                fit: BoxFit.cover,
+              )
+            : const Image(
+                image: AssetImage('assets/no-image.jpg'),
+                height: 120,
+                width: 140,
+                fit: BoxFit.cover,
+              );
   }
 }

@@ -168,22 +168,11 @@ class __ActualizarImgItemState extends State<ActualizarImgItem> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(20.0),
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
           child: Form(
             child: Column(children: <Widget>[
-              // Container(
-              //   alignment: Alignment.center,
-              //   child: Text(
-              //     'Items',
-              //     style: GoogleFonts.urbanist(
-              //       textStyle: const TextStyle(
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: 20,
-              //         color: Color.fromRGBO(0, 41, 107, 1),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              
               SizedBox(
                 height: 20,
               ),
@@ -214,6 +203,7 @@ class __ActualizarImgItemState extends State<ActualizarImgItem> {
                 height: 20,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Descripción: ',
@@ -225,12 +215,16 @@ class __ActualizarImgItemState extends State<ActualizarImgItem> {
                       ),
                     ),
                   ),
-                  Text(
-                    item.description,
-                    style: GoogleFonts.urbanist(
-                      textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                  Expanded(
+                    child: Text(
+                      item.description,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: GoogleFonts.urbanist(
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -299,7 +293,14 @@ class __ActualizarImgItemState extends State<ActualizarImgItem> {
                               borderRadius: BorderRadius.circular(7),
                             ))),
                         onPressed: () async {
+                          showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      });
                           try {
+                            
                             await subir_imagen(
                                 dio: dio, imagen: imagen!, id: item.id, query: 'store');
                             Provider.of<ItemProvider>(context,
