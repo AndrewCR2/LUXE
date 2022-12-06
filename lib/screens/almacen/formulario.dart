@@ -247,7 +247,10 @@ class Form_itemsState extends State<Form_items> {
                           items: [
                             const DropdownMenuItem(
                               value: '123',
-                              child: Text('Contenedores', style: TextStyle(fontWeight: FontWeight.w500),),
+                              child: Text(
+                                'Contenedores',
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
                             ),
                             ...containers
                           ],
@@ -353,8 +356,8 @@ class Form_itemsState extends State<Form_items> {
                         }
 
                         try {
-                          final url = Uri.https( ConfigLuxe.url, '/api/items');
-                              
+                          final url = Uri.https(ConfigLuxe.url, '/api/items');
+
                           final headers = <String, String>{
                             'Content-Type': 'application/json; charset=UTF-8',
                             'x-token': Preferences.token
@@ -379,7 +382,10 @@ class Form_itemsState extends State<Form_items> {
                             final idNewItem = jsonResponse['_id'];
 
                             await subir_imagen(
-                                dio: dio, imagen: imagen!, id: idNewItem, query: 'client');
+                                dio: dio,
+                                imagen: imagen!,
+                                id: idNewItem,
+                                query: 'client');
                             Provider.of<UserProfileProvider>(context,
                                     listen: false)
                                 .getUserProfile(context);
@@ -388,6 +394,7 @@ class Form_itemsState extends State<Form_items> {
                                 context: context,
                                 icon: Icons.task_alt,
                                 message: 'Se ha guardado correctamente',
+                                redirectRoute: 'almacen',
                                 color: Colors.greenAccent[400]!);
                           }
                         } catch (error) {
@@ -410,27 +417,25 @@ class Form_itemsState extends State<Form_items> {
 
   InputDecoration _inpuDecoration() {
     return InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(232, 236, 244, 1),
-                        ),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(232, 236, 244, 1),
-                        ),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ), // Outline Input Border
-                      labelText: "Descripción del Producto",
-                      labelStyle: GoogleFonts.urbanist(
-                        textStyle: const TextStyle(
-                          color: Color.fromRGBO(131, 145, 161, 1),
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: const Color.fromRGBO(247, 248, 249, 1));
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(232, 236, 244, 1),
+          ),
+          borderRadius: BorderRadius.circular(5.5),
+        ), // Outline Input Border
+        labelText: "Descripción del Producto",
+        labelStyle: GoogleFonts.urbanist(
+          textStyle: const TextStyle(
+            color: Color.fromRGBO(131, 145, 161, 1),
+          ),
+        ),
+        filled: true,
+        fillColor: const Color.fromRGBO(247, 248, 249, 1));
   }
 }
-
-

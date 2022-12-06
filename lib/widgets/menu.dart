@@ -33,9 +33,8 @@ class _myMenuState extends State<myMenu> {
     );
   }
 
-
-  Widget buildHeader(User user ,BuildContext context) => Material(
-        color: const Color.fromRGBO(10, 37, 106, 1),
+  Widget buildHeader(User user, BuildContext context) => Material(
+        color: Color.fromRGBO(10, 37, 106, 1),
         child: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -48,11 +47,10 @@ class _myMenuState extends State<myMenu> {
             child: Column(
               children: [
                 Container(
-                  child: const CircleAvatar(
-                    radius: 52,
-                    backgroundImage: AssetImage('assets/LUXE.png'),
-                    backgroundColor: Color.fromRGBO(0, 217, 219, 1),
-                  ),
+                  child: CircleAvatar(
+                      radius: 52,
+                      backgroundImage: AssetImage('assets/LUXE.png'),
+                      backgroundColor: Colors.white),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.amber, width: 3.0),
@@ -124,14 +122,15 @@ class _myMenuState extends State<myMenu> {
               ),
             Divider(),
             ListTile(
-              title:  Text('Cerrar Sesión',
+              title: Text('Cerrar Sesión',
                   style: TextStyle(
                     color: Colors.red[800],
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Roboto-Italic',
                   )),
-              leading:  Icon(
-                Icons.exit_to_app,color: Colors.red[800],
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.red[800],
               ),
               onTap: () {
                 Navigator.pushNamed(context, 'ruta_ingresar');
@@ -167,9 +166,7 @@ class _AdminOptions extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto-Italic',
               )),
-          leading: const Icon(
-            Icons.content_paste_sharp
-          ),
+          leading: const Icon(Icons.content_paste_sharp),
           onTap: () {
             Provider.of<ContenedorProvider>(context, listen: false).getContainers();
 
@@ -183,13 +180,11 @@ class _AdminOptions extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto-Italic',
               )),
-          leading: const Icon(
-            Icons.propane_tank_rounded
-          ),
+          leading: const Icon(Icons.propane_tank_rounded),
           onTap: () {
             Provider.of<ItemProvider>(context, listen: false).getItems();
             Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => ItemsScreen()));
+                .push(MaterialPageRoute(builder: (context) => ItemsScreen()));
           },
         ),
       ],
