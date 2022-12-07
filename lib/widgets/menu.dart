@@ -120,6 +120,21 @@ class _myMenuState extends State<myMenu> {
               Column(
                 children: [_AdminOptions()],
               ),
+              Divider(),
+            ListTile(
+              title: const Text('Editar datos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Roboto-Italic',
+                  )),
+              leading: Icon(
+                Icons.edit,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, 'editar_datos');
+              },
+            ),
+            
             Divider(),
             ListTile(
               title: Text('Cerrar Sesión',

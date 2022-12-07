@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luxe/screens/info/editar_datos.dart';
 import 'package:luxe/screens/principal.dart';
 import 'package:provider/provider.dart';
 import 'package:luxe/shared_preferences/preferences.dart';
@@ -67,6 +68,8 @@ class MyApp extends StatelessWidget {
           'crear_container': (_)=> CreateContainer(),
           'containers_screen': (_)=> ContainesScreen(),
           'items_screen': (_)=> const ItemsScreen(),
+          'editar_datos': (_)=> editarDatos()
+
         },
         theme: ThemeData.light().copyWith(
           appBarTheme: const AppBarTheme(
