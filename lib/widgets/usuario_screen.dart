@@ -16,6 +16,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
   Widget build(BuildContext context) {
     final userProfileProvider = Provider.of<UserProfileProvider>(context);
     userProfileProvider.user;
+    final user = userProfileProvider.user!.user;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -32,14 +33,14 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                   height: 8,
                 ),
                 Text(
-                  'a',
+                  user.name,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 8,
                 ),
                 Text(
-                  'Contenedor',
+                  user.email,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                 ),
                 SizedBox(
@@ -49,7 +50,7 @@ class _UsuarioScreenState extends State<UsuarioScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                buildContent2()
+                // buildContent2()
               ],
             )
           ],
